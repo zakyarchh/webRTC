@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaky - Live Streaming</title>
+    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/sos8c4.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6B8E9F;
+            --primary-light: #8FB4C4;
+            --primary-dark: #4A6B7C;
+            --secondary: #A8D5E5;
+            --accent: #F4A4B4;
+            --accent-light: #FFD4DC;
+            --bg-main: #F0F7FA;
+            --bg-card: #FFFFFF;
+            --text-primary: #3A5565;
+            --text-secondary: #6B8E9F;
+            --text-light: #94B4C4;
+            --shadow-soft: 0 8px 32px rgba(107, 142, 159, 0.15);
+            --shadow-hover: 0 12px 48px rgba(107, 142, 159, 0.25);
+            --gradient-primary: linear-gradient(135deg, #6B8E9F 0%, #8FB4C4 100%);
+            --gradient-accent: linear-gradient(135deg, #F4A4B4 0%, #FFD4DC 100%);
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-main);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .bubble-bg {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(168, 213, 229, 0.3), rgba(244, 164, 180, 0.2));
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .bubble-bg:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; animation-delay: 0s; }
+        .bubble-bg:nth-child(2) { width: 200px; height: 200px; top: 50%; right: -50px; animation-delay: -5s; }
+        .bubble-bg:nth-child(3) { width: 150px; height: 150px; bottom: -50px; left: 30%; animation-delay: -10s; }
+        .bubble-bg:nth-child(4) { width: 250px; height: 250px; top: 20%; left: 60%; animation-delay: -15s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-30px) rotate(10deg); opacity: 0.8; }
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(107, 142, 159, 0.1);
+        }
+        
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .nav-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(107, 142, 159, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+        
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(107, 142, 159, 0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-light);
+        }
+        
+        .status-dot.live {
+            background: #4ADE80;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        /* Main Content */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+        }
+        
+        .content-wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 32px;
+            object-fit: cover;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        /* Card Bubble */
+        .card-bubble {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 32px;
+            box-shadow: var(--shadow-soft);
+            animation: fadeInUp 0.8s ease 0.2s both;
+            transition: all 0.4s ease;
+        }
+        
+        .card-bubble:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        
+        .card-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+        
+        .input-bubble {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(107, 142, 159, 0.15);
+            border-radius: 18px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 500;
+            color: var(--text-primary);
+            background: var(--bg-main);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .input-bubble::placeholder {
+            color: var(--text-light);
+        }
+        
+        .input-bubble:focus {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(107, 142, 159, 0.1);
+        }
+        
+        .input-bubble.error {
+            border-color: var(--accent);
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        /* Button */
+        .btn-bubble {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 18px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 6px 24px rgba(107, 142, 159, 0.35);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(107, 142, 159, 0.45);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: var(--bg-main);
+            color: var(--text-primary);
+            margin-top: 12px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(107, 142, 159, 0.1);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Messages */
+        .message-bubble {
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        .message-error {
+            background: rgba(244, 164, 180, 0.2);
+            color: #C4748A;
+            border: 1px solid rgba(244, 164, 180, 0.3);
+        }
+        
+        .message-success {
+            background: rgba(74, 222, 128, 0.15);
+            color: #2D8A4E;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+        
+        .message-info {
+            background: rgba(107, 142, 159, 0.15);
+            color: var(--primary-dark);
+            border: 1px solid rgba(107, 142, 159, 0.2);
+        }
+        
+        /* Steps Indicator */
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(107, 142, 159, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .step-dot.active {
+            width: 32px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+        }
+        
+        /* View States */
+        .view {
+            display: none;
+        }
+        
+        .view.active {
+            display: block;
+        }
+        
+        /* Live Badge */
+        .live-badge-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #EF4444, #F87171);
+            color: white;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+            animation: glow 2s infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.5); }
+        }
+        
+        /* Footer */
+        .footer-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .footer-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .nav-title {
+                font-size: 1.3rem;
+            }
+            
+            .nav-logo {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .main-container {
+                padding: 80px 16px 32px;
+            }
+            
+            .card-bubble {
+                padding: 24px;
+                border-radius: 28px;
+            }
+            
+            .hero-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 26px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Decoration -->
+    <div class="bg-decoration">
+        <div class="bubble-bg"></div>
+        <div class="bubble-bg"></div>
+        <div class="bubble-bg"></div>
+        <div class="bubble-bg"></div>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <img src="https://files.catbox.moe/sos8c4.jpg" alt="Zaky" class="nav-logo">
+            <span class="nav-title">Zaky</span>
+        </a>
+        <div class="nav-status" id="navStatus">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Offline</span>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="content-wrapper">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <img src="https://files.catbox.moe/sos8c4.jpg" alt="Zaky" class="hero-icon">
+                <h1 class="hero-title">Zaky Live</h1>
+                <p class="hero-subtitle">Streaming langsung berkualitas tinggi</p>
+            </section>
+            
+            <!-- Token Validation View -->
+            <div class="view active" id="tokenView">
+                <div class="card-bubble">
+                    <div class="steps-indicator">
+                        <div class="step-dot active"></div>
+                        <div class="step-dot"></div>
+                    </div>
+                    
+                    <div class="card-header">
+                        <h2 class="card-title">Masukkan Token</h2>
+                        <p class="card-desc">Masukkan token untuk bergabung ke streaming</p>
+                    </div>
+                    
+                    <div id="tokenMessage"></div>
+                    
+                    <form id="tokenForm">
+                        <div class="form-group">
+                            <label class="form-label">Token Akses</label>
+                            <input type="text" class="input-bubble" id="tokenInput" 
+                                   placeholder="Masukkan token..." autocomplete="off">
+                        </div>
+                        
+                        <button type="submit" class="btn-bubble btn-primary" id="tokenBtn">
+                            Validasi Token
+                        </button>
+                    </form>
+                    
+                    <p class="footer-text">
+                        Free? <a href="free.html">free token</a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Name Input View -->
+            <div class="view" id="nameView">
+                <div class="card-bubble">
+                    <div class="steps-indicator">
+                        <div class="step-dot"></div>
+                        <div class="step-dot active"></div>
+                    </div>
+                    
+                    <div class="card-header">
+                        <div class="live-badge-large" id="liveBadge" style="display: none;">
+                            <span class="status-dot live"></span>
+                            LIVE NOW
+                        </div>
+                        <h2 class="card-title">Siapa Nama Kamu?</h2>
+                        <p class="card-desc">Nama akan ditampilkan di live chat</p>
+                    </div>
+                    
+                    <div id="nameMessage"></div>
+                    
+                    <form id="nameForm">
+                        <div class="form-group">
+                            <label class="form-label">Nama Tampilan</label>
+                            <input type="text" class="input-bubble" id="nameInput" 
+                                   placeholder="Nama kamu..." maxlength="20" autocomplete="off">
+                        </div>
+                        
+                        <button type="submit" class="btn-bubble btn-primary" id="joinBtn">
+                            🎬 Gabung Streaming
+                        </button>
+                        
+                        <button type="button" class="btn-bubble btn-secondary" id="backBtn">
+                            ← Kembali
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            setDoc, 
+            updateDoc,
+            onSnapshot,
+            serverTimestamp,
+            increment
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhRMtGKUs0ih1wDuR3FpzSyYJnouQWat8",
+            authDomain: "livehshshs.firebaseapp.com",
+            projectId: "livehshshs",
+            storageBucket: "livehshshs.firebasestorage.app",
+            messagingSenderId: "363301327113",
+            appId: "1:363301327113:web:05ee9e34cd7eb71acac3d8",
+            measurementId: "G-0VVRS3GZY4"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // DOM Elements
+        const tokenView = document.getElementById('tokenView');
+        const nameView = document.getElementById('nameView');
+        const tokenForm = document.getElementById('tokenForm');
+        const nameForm = document.getElementById('nameForm');
+        const tokenInput = document.getElementById('tokenInput');
+        const nameInput = document.getElementById('nameInput');
+        const tokenBtn = document.getElementById('tokenBtn');
+        const joinBtn = document.getElementById('joinBtn');
+        const backBtn = document.getElementById('backBtn');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const liveBadge = document.getElementById('liveBadge');
+        
+        let validatedToken = null;
+        let isLiveActive = false;
+        
+        // Check for token in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlToken = urlParams.get('token');
+        if (urlToken) {
+            tokenInput.value = urlToken;
+        }
+        
+        // Monitor live status
+        const liveStatusRef = doc(db, 'liveStatus', 'status');
+        const unsubscribeLiveStatus = onSnapshot(liveStatusRef, (snapshot) => {
+            const data = snapshot.data();
+            isLiveActive = data?.isLive || false;
+            
+            if (isLiveActive) {
+                statusDot.classList.add('live');
+                statusText.textContent = 'LIVE';
+                liveBadge.style.display = 'inline-flex';
+            } else {
+                statusDot.classList.remove('live');
+                statusText.textContent = 'Offline';
+                liveBadge.style.display = 'none';
+            }
+        }, (error) => {
+            console.error('Live status error:', error);
+        });
+        
+        // Show message helper
+        function showMessage(containerId, type, message) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="message-bubble message-${type}">
+                    ${type === 'error' ? '⚠️' : type === 'success' ? '✅' : 'ℹ️'} ${message}
+                </div>
+            `;
+        }
+        
+        function clearMessage(containerId) {
+            document.getElementById(containerId).innerHTML = '';
+        }
+        
+        // Token validation
+        tokenForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const token = tokenInput.value.trim().toUpperCase();
+            
+            if (!token) {
+                showMessage('tokenMessage', 'error', 'Token tidak boleh kosong');
+                tokenInput.classList.add('error');
+                setTimeout(() => tokenInput.classList.remove('error'), 500);
+                return;
+            }
+            
+            tokenBtn.disabled = true;
+            tokenBtn.innerHTML = '<span class="spinner"></span> Memvalidasi...';
+            
+            try {
+                const tokenRef = doc(db, 'tokens', token);
+                const tokenSnapshot = await getDoc(tokenRef);
+                
+                if (!tokenSnapshot.exists()) {
+                    showMessage('tokenMessage', 'error', 'Token tidak ditemukan');
+                    tokenBtn.disabled = false;
+                    tokenBtn.textContent = 'Validasi Token';
+                    return;
+                }
+                
+                const tokenData = tokenSnapshot.data();
+                
+                // Check token status
+                if (tokenData.status !== 'active') {
+                    showMessage('tokenMessage', 'error', 'Token tidak aktif atau sudah digunakan');
+                    tokenBtn.disabled = false;
+                    tokenBtn.textContent = 'Validasi Token';
+                    return;
+                }
+                
+                // Check expiration
+                if (tokenData.expiresAt && tokenData.expiresAt.toDate() < new Date()) {
+                    showMessage('tokenMessage', 'error', 'Token sudah kadaluarsa');
+                    tokenBtn.disabled = false;
+                    tokenBtn.textContent = 'Validasi Token';
+                    return;
+                }
+                
+                // Check max viewers
+                if (tokenData.maxViewers && tokenData.currentViewers >= tokenData.maxViewers) {
+                    showMessage('tokenMessage', 'error', 'Batas viewer sudah tercapai');
+                    tokenBtn.disabled = false;
+                    tokenBtn.textContent = 'Validasi Token';
+                    return;
+                }
+                
+                // Check if live is active
+                if (!isLiveActive) {
+                    showMessage('tokenMessage', 'info', 'Token valid! Menunggu streaming dimulai...');
+                }
+                
+                // Token valid - show name input
+                validatedToken = token;
+                tokenView.classList.remove('active');
+                nameView.classList.add('active');
+                clearMessage('tokenMessage');
+                tokenBtn.disabled = false;
+                tokenBtn.textContent = 'Validasi Token';
+                
+            } catch (error) {
+                console.error(error);
+                showMessage('tokenMessage', 'error', 'Gagal memvalidasi token. Coba lagi.');
+                tokenBtn.disabled = false;
+                tokenBtn.textContent = 'Validasi Token';
+            }
+        });
+        
+        // Name submission
+        nameForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                showMessage('nameMessage', 'error', 'Nama tidak boleh kosong');
+                nameInput.classList.add('error');
+                setTimeout(() => nameInput.classList.remove('error'), 500);
+                return;
+            }
+            
+            if (name.length < 2) {
+                showMessage('nameMessage', 'error', 'Nama minimal 2 karakter');
+                return;
+            }
+            
+            joinBtn.disabled = true;
+            joinBtn.innerHTML = '<span class="spinner"></span> Menghubungkan...';
+            
+            try {
+                // Generate viewer ID
+                const viewerId = 'viewer_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                
+                // Store viewer session
+                sessionStorage.setItem('viewerToken', validatedToken);
+                sessionStorage.setItem('viewerName', name);
+                sessionStorage.setItem('viewerId', viewerId);
+                
+                // Register viewer in Firestore
+                await setDoc(doc(db, 'viewers', viewerId), {
+                    name: name,
+                    token: validatedToken,
+                    joinedAt: serverTimestamp(),
+                    status: 'active'
+                });
+                
+                // Register presence
+                await setDoc(doc(db, 'presence', viewerId), {
+                    name: name,
+                    online: true,
+                    lastSeen: serverTimestamp()
+                });
+                
+                // Update token viewer count
+                await updateDoc(doc(db, 'tokens', validatedToken), {
+                    currentViewers: increment(1)
+                });
+                
+                // Redirect to stream
+                window.location.href = 'stream.html';
+                
+            } catch (error) {
+                console.error(error);
+                showMessage('nameMessage', 'error', 'Gagal bergabung. Coba lagi.');
+                joinBtn.disabled = false;
+                joinBtn.textContent = '🎬 Gabung Streaming';
+            }
+        });
+        
+        // Back button
+        backBtn.addEventListener('click', () => {
+            nameView.classList.remove('active');
+            tokenView.classList.add('active');
+            clearMessage('nameMessage');
+            nameInput.value = '';
+        });
+    </script>
+</body>
+</html>

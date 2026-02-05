@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Challenge 2024 - Test Kecerdasan Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f1e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59, #c471ed, #12c2e9);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.3;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .particle::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            to {
+                transform: translateY(-100vh) translateX(100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .main-container {
+            width: 90%;
+            max-width: 600px;
+            animation: slideUp 0.8s ease;
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: glow 2s ease infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(18, 194, 233, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(18, 194, 233, 0.8)); }
+        }
+
+        .logo {
+            font-size: 4em;
+            margin-bottom: 10px;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(18, 194, 233, 0.5);
+        }
+
+        .tagline {
+            color: #a8a8b3;
+            font-size: 1.1em;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #a8a8b3;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .wrong-stat .stat-number {
+            color: #ff4757;
+            text-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+            animation: pulse 1s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Question Card */
+        .question-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 30px;
+            line-height: 1.4;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Input Field */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #12c2e9;
+            box-shadow: 0 0 30px rgba(18, 194, 233, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Feedback Messages */
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            animation: feedbackPop 0.5s ease;
+        }
+
+        @keyframes feedbackPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid rgba(255, 71, 87, 0.5);
+            box-shadow: 0 0 100px rgba(255, 71, 87, 0.5);
+            animation: modalBounce 0.8s ease;
+        }
+
+        @keyframes modalBounce {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .emoji-big {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: emojiSpin 1s ease;
+        }
+
+        @keyframes emojiSpin {
+            from { transform: rotate(0deg) scale(0); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        .modal h2 {
+            color: #ff4757;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(255, 71, 87, 0.5);
+        }
+
+        .modal p {
+            color: #a8a8b3;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .countdown-display {
+            font-size: 6em;
+            font-weight: 800;
+            color: #ff4757;
+            text-shadow: 0 0 50px rgba(255, 71, 87, 0.8);
+            margin: 30px 0;
+            animation: countPulse 1s ease infinite;
+        }
+
+        @keyframes countPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Timer Bar */
+        .timer-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
+            border-radius: 10px;
+            width: 100%;
+            animation: timerDecrease 10s linear;
+        }
+
+        @keyframes timerDecrease {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .question-text { font-size: 1.2em; }
+            .stats-bar { 
+                flex-direction: row;
+                gap: 20px;
+            }
+            .stat-number { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+
+    <div class="main-container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <div class="logo">🧠</div>
+            <h1>IQ Challenge</h1>
+            <p class="tagline">Buktikan Kamu Genius atau Bukan!</p>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number" id="questionNum">1</span>
+                <span class="stat-label">Soal</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="correctNum">0</span>
+                <span class="stat-label">Benar</span>
+            </div>
+            <div class="stat-item wrong-stat">
+                <span class="stat-number" id="wrongNum">0</span>
+                <span class="stat-label">Salah</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="scoreNum">0</span>
+                <span class="stat-label">Skor</span>
+            </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-card">
+            <span class="question-number">PERTANYAAN #<span id="qNumber">1</span></span>
+            
+            <div class="timer-bar">
+                <div class="timer-fill" id="timerFill"></div>
+            </div>
+
+            <div class="question-text" id="questionText">
+                Loading question...
+            </div>
+
+            <div class="input-group">
+                <input type="text" 
+                       class="answer-input" 
+                       id="answerInput" 
+                       placeholder="Ketik jawabanmu di sini..."
+                       autocomplete="off">
+            </div>
+
+            <button class="submit-btn" onclick="checkAnswer()">
+                SUBMIT JAWABAN
+            </button>
+
+            <div id="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Modal Gagal -->
+    <div class="modal" id="failModal">
+        <div class="modal-content">
+            <div class="emoji-big">😈</div>
+            <h2>GAME OVER!</h2>
+            <p>
+                Kamu sudah salah 3 kali!<br>
+                IQ kamu ternyata di bawah rata-rata 😂<br>
+                Bersiaplah untuk hukumanmu...
+            </p>
+            <div class="countdown-display" id="countdown">3</div>
+            <p style="color: #ff4757; font-weight: 600;">
+                ⚠️ PERINGATAN: Konten Dewasa Akan Terbuka ⚠️
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let wrongAttempts = 0;
+        let correctAttempts = 0;
+        let questionNumber = 0;
+        let score = 0;
+        let currentQuestion = {};
+
+        // Question Generator
+        function generateQuestion() {
+            const types = [
+                // Matematika Dasar
+                () => {
+                    const a = Math.floor(Math.random() * 50) + 10;
+                    const b = Math.floor(Math.random() * 30) + 10;
+                    const ops = [
+                        {symbol: '+', calc: (x,y) => x + y},
+                        {symbol: '-', calc: (x,y) => x - y},
+                        {symbol: '×', calc: (x,y) => x * y}
+                    ];
+                    const op = ops[Math.floor(Math.random() * ops.length)];
+                    return {
+                        q: `${a} ${op.symbol} ${b} = ?`,
+                        a: op.calc(a, b).toString()
+                    };
+                },
+                
+                // Persamaan Sederhana
+                () => {
+                    const result = Math.floor(Math.random() * 20) + 5;
+                    const b = Math.floor(Math.random() * 10) + 1;
+                    const a = result + b;
+                    return {
+                        q: `Jika X + ${b} = ${a}, berapa nilai X?`,
+                        a: result.toString()
+                    };
+                },
+                
+                // Logika Angka
+                () => {
+                    const start = Math.floor(Math.random() * 10) + 1;
+                    const step = Math.floor(Math.random() * 5) + 2;
+                    const seq = [start, start+step, start+(step*2), start+(step*3)];
+                    return {
+                        q: `Lanjutkan deret: ${seq.slice(0,3).join(', ')}, ...?`,
+                        a: seq[3].toString()
+                    };
+                },
+                
+                // Kuadrat
+                () => {
+                    const n = Math.floor(Math.random() * 15) + 5;
+                    return {
+                        q: `Berapa ${n}²?`,
+                        a: (n * n).toString()
+                    };
+                },
+                
+                // Persen
+                () => {
+                    const total = [100, 200, 500, 1000][Math.floor(Math.random() * 4)];
+                    const percent = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
+                    return {
+                        q: `Berapa ${percent}% dari ${total}?`,
+                        a: (total * percent / 100).toString()
+                    };
+                },
+                
+                // Word Problem
+                () => {
+                    const apples = Math.floor(Math.random() * 30) + 10;
+                    const given = Math.floor(Math.random() * 10) + 1;
+                    return {
+                        q: `Kamu punya ${apples} apel, memberikan ${given} ke teman. Sisa?`,
+                        a: (apples - given).toString()
+                    };
+                },
+                
+                // Faktorial Sederhana
+                () => {
+                    const n = Math.floor(Math.random() * 4) + 3;
+                    let result = 1;
+                    for(let i = 1; i <= n; i++) result *= i;
+                    return {
+                        q: `Berapa ${n}! (faktorial)?`,
+                        a: result.toString()
+                    };
+                },
+                
+                // Geometri
+                () => {
+                    const sisi = Math.floor(Math.random() * 10) + 3;
+                    return {
+                        q: `Luas persegi dengan sisi ${sisi} cm?`,
+                        a: (sisi * sisi).toString()
+                    };
+                }
+            ];
+            
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            return randomType();
+        }
+
+        // New Question
+        function newQuestion() {
+            questionNumber++;
+            currentQuestion = generateQuestion();
+            
+            document.getElementById('questionNum').textContent = questionNumber;
+            document.getElementById('qNumber').textContent = questionNumber;
+            document.getElementById('questionText').textContent = currentQuestion.q;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedback').innerHTML = '';
+            
+            // Reset timer animation
+            const timer = document.getElementById('timerFill');
+            timer.style.animation = 'none';
+            setTimeout(() => {
+                timer.style.animation = 'timerDecrease 10s linear';
+            }, 10);
+        }
+
+        // Check Answer
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answerInput').value.trim();
+            const feedback = document.getElementById('feedback');
+            
+            if (userAnswer === '') {
+                feedback.innerHTML = '<div class="feedback wrong">⚠️ Tulis jawabanmu dulu!</div>';
+                return;
+            }
+            
+            if (userAnswer === currentQuestion.a) {
+                correctAttempts++;
+                score += 10;
+                document.getElementById('correctNum').textContent = correctAttempts;
+                document.getElementById('scoreNum').textContent = score;
+                feedback.innerHTML = '<div class="feedback correct">✅ BENAR! Kamu Pintar!</div>';
+                
+                setTimeout(newQuestion, 1500);
+            } else {
+                wrongAttempts++;
+                document.getElementById('wrongNum').textContent = wrongAttempts;
+                feedback.innerHTML = `<div class="feedback wrong">❌ SALAH! Jawaban: ${currentQuestion.a}</div>`;
+                
+                if (wrongAttempts >= 3) {
+                    setTimeout(showFailModal, 1000);
+                } else {
+                    setTimeout(newQuestion, 2000);
+                }
+            }
+        }
+
+        // Show Fail Modal & Redirect
+        function showFailModal() {
+            document.getElementById('failModal').classList.add('show');
+            
+            let count = 3;
+            const countdownEl = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownEl.textContent = count;
+                } else {
+                    countdownEl.textContent = '💀';
+                    clearInterval(timer);
+                    
+                    // REDIRECT ke Website Target
+                    setTimeout(() => {
+                        window.location.href = 'https://www.pornhub.com';
+                    }, 500);
+                }
+            }, 1000);
+        }
+
+        // Enter key support
+        document.getElementById('answerInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // Initialize
+        window.onload = function() {
+            newQuestion();
+        };
+    </script>
+</body>
+</html>
