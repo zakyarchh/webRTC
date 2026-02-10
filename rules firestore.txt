@@ -1,0 +1,301 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
+    
+    // Check if user is authenticated admin
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email == 'ikaz@live.id' &&
+             request.auth.token.email_verified == true;
+    }
+    
+    // Check if user owns the resource
+    function isOwner(userId) {
+      return request.auth != null && 
+             request.auth.uid == userId;
+    }
+    
+    // Check if viewer document exists
+    function viewerExists(viewerId) {
+      return exists(/databases/$(database)/documents/viewers/$(viewerId));
+    }
+    
+    // Check if token is valid and not expired
+    function isValidToken(tokenId) {
+      let tokenDoc = get(/databases/$(database)/documents/tokens/$(tokenId));
+      return tokenDoc != null && 
+             tokenDoc.data.expiresAt > request.time;
+    }
+    
+    // Check if data has required fields
+    function hasRequiredFields(required) {
+      return request.resource.data.keys().hasAll(required);
+    }
+    
+    // Check if complaint is recent (less than 5 minutes old)
+    function isRecentComplaint(complaintData) {
+      return complaintData.createdAt > request.time - duration.value(5, 'm');
+    }
+    
+    
+    // ========================================
+    // LIVE STREAM COLLECTION
+    // ========================================
+    
+    match /liveStream/{document} {
+      // Anyone can read stream status (for public viewing)
+      allow read: if true;
+      
+      // Only admin can create/update stream
+      allow create, update: if isAdmin();
+      
+      // Prevent deletion (only update status to offline)
+      allow delete: if false;
+    }
+    
+    
+    // ========================================
+    // VIEWERS COLLECTION
+    // ========================================
+    
+    match /viewers/{viewerId} {
+      // Anyone can read viewers (for counting, display)
+      allow read: if true;
+      
+      // Anyone can create a viewer document (when joining stream)
+      allow create: if hasRequiredFields(['name', 'status', 'createdAt']) &&
+                      request.resource.data.status == 'pending';
+      
+      // Viewer can update their own document, admin can update any
+      allow update: if isAdmin() || 
+                      (request.resource.data.keys().hasAny(['answer', 'status']) &&
+                       viewerExists(viewerId));
+      
+      // Only admin can delete viewers
+      allow delete: if isAdmin();
+      
+      
+      // --- Admin ICE Candidates Subcollection ---
+      match /adminCandidates/{candidateId} {
+        // Viewers can read admin's ICE candidates
+        allow read: if viewerExists(viewerId);
+        
+        // Only admin can write admin candidates
+        allow create: if isAdmin() && 
+                        hasRequiredFields(['candidate', 'createdAt']);
+        
+        allow update, delete: if false; // Prevent modification
+      }
+      
+      
+      // --- Viewer ICE Candidates Subcollection ---
+      match /viewerCandidates/{candidateId} {
+        // Admin can read viewer's ICE candidates
+        allow read: if isAdmin();
+        
+        // Viewers can write their own candidates
+        allow create: if viewerExists(viewerId) &&
+                        hasRequiredFields(['candidate', 'createdAt']);
+        
+        allow update, delete: if false; // Prevent modification
+      }
+    }
+    
+    
+    // ========================================
+    // TOKENS COLLECTION
+    // ========================================
+    
+    match /tokens/{tokenId} {
+      // Anyone can read tokens (for validation purposes)
+      allow read: if true;
+      
+      // Only admin can create tokens with proper structure
+      allow create: if isAdmin() &&
+                      hasRequiredFields(['token', 'expiresAt', 'createdAt']) &&
+                      request.resource.data.token is string &&
+                      request.resource.data.token.size() >= 4 &&
+                      request.resource.data.token.size() <= 20 &&
+                      request.resource.data.expiresAt > request.time;
+      
+      // Only admin can update tokens
+      allow update: if isAdmin();
+      
+      // Only admin can delete tokens
+      allow delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // COMPLAINTS COLLECTION
+    // ========================================
+    
+    match /complaints/{complaintId} {
+      // Anyone can read complaints
+      allow read: if true;
+      
+      // Anyone can create a complaint with required fields
+      allow create: if hasRequiredFields(['viewerId', 'viewerName', 'message', 'createdAt']) &&
+                      request.resource.data.message is string &&
+                      request.resource.data.message.size() > 0 &&
+                      request.resource.data.message.size() <= 500 &&
+                      request.resource.data.viewerName.size() > 0 &&
+                      request.resource.data.viewerName.size() <= 50;
+      
+      // Only admin can update complaints (for adding replies)
+      allow update: if isAdmin() &&
+                      request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reply']) &&
+                      request.resource.data.reply is string &&
+                      request.resource.data.reply.size() > 0 &&
+                      request.resource.data.reply.size() <= 500;
+      
+      // Admin can delete any complaint
+      // Or auto-cleanup after 5 minutes (handled client-side)
+      allow delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // NOTIFICATIONS COLLECTION
+    // ========================================
+    
+    match /notifications/{notificationId} {
+      // Anyone can read notifications
+      allow read: if true;
+      
+      // Only admin can create notifications
+      allow create: if isAdmin() &&
+                      hasRequiredFields(['message', 'createdAt']) &&
+                      request.resource.data.message is string &&
+                      request.resource.data.message.size() > 0 &&
+                      request.resource.data.message.size() <= 500;
+      
+      // Only admin can update notifications
+      allow update: if isAdmin();
+      
+      // Only admin can delete notifications
+      allow delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // SETTINGS COLLECTION (Optional - Future Use)
+    // ========================================
+    
+    match /settings/{document} {
+      // Only admin can read settings
+      allow read: if isAdmin();
+      
+      // Only admin can write settings
+      allow write: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // SESSIONS COLLECTION (Optional - Tracking)
+    // ========================================
+    
+    match /sessions/{sessionId} {
+      // Users can read their own session
+      allow read: if request.auth != null && 
+                    resource.data.userId == request.auth.uid;
+      
+      // Users can create their own session
+      allow create: if request.auth != null && 
+                      request.resource.data.userId == request.auth.uid;
+      
+      // Users can update their own session
+      allow update: if request.auth != null && 
+                      resource.data.userId == request.auth.uid;
+      
+      // Admin can delete any session
+      allow delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // REPLAYS COLLECTION (Future Feature)
+    // ========================================
+    
+    match /replays/{replayId} {
+      // Anyone can read replays
+      allow read: if true;
+      
+      // Only admin can write replays
+      allow write: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // ANALYTICS COLLECTION (Admin Only)
+    // ========================================
+    
+    match /analytics/{document} {
+      // Only admin can read analytics
+      allow read: if isAdmin();
+      
+      // Prevent direct writes (use Cloud Functions)
+      allow write: if false;
+    }
+    
+    
+    // ========================================
+    // CHAT MESSAGES (If Implementing Chat)
+    // ========================================
+    
+    match /chats/{chatId} {
+      // Anyone can read chats
+      allow read: if true;
+      
+      // Authenticated users can create chats
+      allow create: if request.auth != null &&
+                      hasRequiredFields(['userId', 'userName', 'message', 'createdAt']) &&
+                      request.resource.data.message.size() > 0 &&
+                      request.resource.data.message.size() <= 300;
+      
+      // Users can update/delete their own chats
+      allow update, delete: if request.auth != null && 
+                              resource.data.userId == request.auth.uid;
+    }
+    
+    
+    // ========================================
+    // BLOCKLIST COLLECTION
+    // ========================================
+    
+    match /blocklist/{userId} {
+      // Only admin can read blocklist
+      allow read: if isAdmin();
+      
+      // Only admin can write to blocklist
+      allow write: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // ADMIN LOGS (Server-Side Only)
+    // ========================================
+    
+    match /adminLogs/{logId} {
+      // Only admin can read logs
+      allow read: if isAdmin();
+      
+      // Prevent direct writes (use Cloud Functions)
+      allow write: if false;
+    }
+    
+    
+    // ========================================
+    // DEFAULT DENY ALL
+    // ========================================
+    
+    // Catch-all: deny access to any other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
