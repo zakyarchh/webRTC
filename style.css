@@ -1,0 +1,3719 @@
+/* ============================================
+   IKAZ LIVE STREAMING
+   Organic White Theme - Non-AI Design
+   100+ Handcrafted Animations
+   Matching: index.html, admin.html, stream.html
+   ============================================ */
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+    /* === White Palette === */
+    --white-pure: #ffffff;
+    --white-snow: #fffafa;
+    --white-ghost: #f8f8ff;
+    --white-ivory: #fffff0;
+    --white-seashell: #fff5ee;
+    --white-honeydew: #f0fff0;
+    --white-azure: #f0ffff;
+    --white-lavender: #fff0f5;
+    --white-linen: #faf0e6;
+    --white-oldlace: #fdf5e6;
+    --white-cream: #fefef2;
+    --white-pearl: #f5f5f5;
+    --white-smoke: #f8f9fa;
+    --white-milk: #fdfbf7;
+    --white-chalk: #f1f3f4;
+    --white-fog: #fafafa;
+    --white-mist: #fefefe;
+    --white-cloud: #f9fafb;
+    
+    /* === Transparent Whites === */
+    --white-95: rgba(255, 255, 255, 0.95);
+    --white-90: rgba(255, 255, 255, 0.90);
+    --white-80: rgba(255, 255, 255, 0.80);
+    --white-70: rgba(255, 255, 255, 0.70);
+    --white-60: rgba(255, 255, 255, 0.60);
+    --white-50: rgba(255, 255, 255, 0.50);
+    --white-40: rgba(255, 255, 255, 0.40);
+    --white-30: rgba(255, 255, 255, 0.30);
+    --white-20: rgba(255, 255, 255, 0.20);
+    --white-15: rgba(255, 255, 255, 0.15);
+    --white-10: rgba(255, 255, 255, 0.10);
+    --white-05: rgba(255, 255, 255, 0.05);
+    
+    /* === Shadow Grays === */
+    --shadow-whisper: rgba(0, 0, 0, 0.02);
+    --shadow-breath: rgba(0, 0, 0, 0.03);
+    --shadow-feather: rgba(0, 0, 0, 0.04);
+    --shadow-silk: rgba(0, 0, 0, 0.05);
+    --shadow-cotton: rgba(0, 0, 0, 0.06);
+    --shadow-linen: rgba(0, 0, 0, 0.07);
+    --shadow-wool: rgba(0, 0, 0, 0.08);
+    --shadow-stone: rgba(0, 0, 0, 0.10);
+    --shadow-ash: rgba(0, 0, 0, 0.12);
+    --shadow-charcoal: rgba(0, 0, 0, 0.15);
+    --shadow-deep: rgba(0, 0, 0, 0.20);
+    
+    /* === Accent Colors (Very Subtle) === */
+    --accent-blush: rgba(255, 182, 193, 0.25);
+    --accent-mint: rgba(152, 251, 152, 0.20);
+    --accent-sky: rgba(135, 206, 235, 0.20);
+    --accent-butter: rgba(255, 255, 200, 0.25);
+    --accent-rose: rgba(255, 192, 203, 0.30);
+    --accent-sage: rgba(188, 210, 180, 0.20);
+    --accent-peach: rgba(255, 218, 185, 0.25);
+    --accent-lilac: rgba(200, 162, 200, 0.20);
+    
+    /* === Status Colors === */
+    --status-online: #22c55e;
+    --status-online-bg: rgba(34, 197, 94, 0.15);
+    --status-offline: #ef4444;
+    --status-offline-bg: rgba(239, 68, 68, 0.15);
+    --status-pending: #f59e0b;
+    --status-pending-bg: rgba(245, 158, 11, 0.15);
+    --status-info: #3b82f6;
+    --status-info-bg: rgba(59, 130, 246, 0.15);
+    
+    /* === Text Colors === */
+    --text-ink: #1a1a2e;
+    --text-graphite: #2d2d44;
+    --text-slate: #4a4a68;
+    --text-pewter: #6b6b8a;
+    --text-silver: #9999b3;
+    --text-mist: #ccccdd;
+    --text-ghost: #e8e8f0;
+    
+    /* === Glass Properties === */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-bg-hover: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.50);
+    --glass-border-subtle: rgba(0, 0, 0, 0.06);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.12);
+    --glass-blur: 20px;
+    --glass-blur-heavy: 40px;
+    
+    /* === Organic Easing Functions === */
+    --ease-breathe: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-flutter: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-drift: cubic-bezier(0.39, 0.575, 0.565, 1);
+    --ease-sway: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-bloom: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-ripple: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-wave: cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.175);
+    --ease-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --ease-elastic: cubic-bezier(0.5, 1.5, 0.5, 1);
+    --ease-silk: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-feather: cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    /* === Timing Variables === */
+    --duration-instant: 0.1s;
+    --duration-quick: 0.2s;
+    --duration-normal: 0.35s;
+    --duration-gentle: 0.5s;
+    --duration-slow: 0.8s;
+    --duration-lazy: 1.2s;
+    --duration-dreamy: 2s;
+    --duration-eternal: 4s;
+    --duration-cosmic: 8s;
+    --duration-infinite: 15s;
+    
+    /* === Spacing (Organic, Not Perfect) === */
+    --space-hair: 2px;
+    --space-whisper: 4px;
+    --space-breath: 8px;
+    --space-touch: 12px;
+    --space-hand: 16px;
+    --space-arm: 24px;
+    --space-step: 32px;
+    --space-leap: 48px;
+    --space-bound: 64px;
+    --space-horizon: 96px;
+    
+    /* === Border Radius (Imperfect) === */
+    --radius-hair: 2px;
+    --radius-pebble: 4px;
+    --radius-stone: 8px;
+    --radius-rock: 12px;
+    --radius-boulder: 16px;
+    --radius-mountain: 20px;
+    --radius-cloud: 24px;
+    --radius-sky: 32px;
+    --radius-full: 9999px;
+    
+    /* === Typography === */
+    --font-body: 'Segoe UI', 'Hiragino Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Segoe UI', 'Hiragino Sans', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ===== RESET & BASE ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--white-pure);
+    color: var(--text-ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* === Organic Background with Watercolor Stains === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* Watercolor blobs */
+        radial-gradient(ellipse 120% 80% at 15% 20%, var(--accent-blush), transparent 50%),
+        radial-gradient(ellipse 100% 60% at 85% 75%, var(--accent-mint), transparent 45%),
+        radial-gradient(ellipse 80% 100% at 50% 50%, var(--accent-sky), transparent 40%),
+        radial-gradient(ellipse 60% 80% at 75% 25%, var(--accent-peach), transparent 35%),
+        radial-gradient(ellipse 90% 70% at 25% 80%, var(--accent-lilac), transparent 40%),
+        /* Subtle paper texture */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            var(--shadow-whisper) 2px,
+            var(--shadow-whisper) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            var(--shadow-whisper) 2px,
+            var(--shadow-whisper) 4px
+        ),
+        var(--white-pure);
+    pointer-events: none;
+    z-index: -2;
+    animation: background-drift 90s ease-in-out infinite alternate;
+}
+
+/* === Floating Dust Particles === */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    background-image: 
+        radial-gradient(1px 1px at 10% 20%, var(--shadow-silk), transparent),
+        radial-gradient(1.5px 1.5px at 25% 45%, var(--shadow-feather), transparent),
+        radial-gradient(1px 1px at 40% 10%, var(--shadow-cotton), transparent),
+        radial-gradient(2px 2px at 55% 70%, var(--shadow-breath), transparent),
+        radial-gradient(1px 1px at 70% 35%, var(--shadow-silk), transparent),
+        radial-gradient(1.5px 1.5px at 85% 85%, var(--shadow-feather), transparent),
+        radial-gradient(1px 1px at 30% 65%, var(--shadow-cotton), transparent),
+        radial-gradient(2px 2px at 60% 25%, var(--shadow-breath), transparent),
+        radial-gradient(1px 1px at 90% 55%, var(--shadow-silk), transparent),
+        radial-gradient(1.5px 1.5px at 15% 90%, var(--shadow-feather), transparent);
+    background-size: 500px 500px;
+    pointer-events: none;
+    z-index: -1;
+    animation: dust-float 180s linear infinite;
+    opacity: 0.7;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-arm);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== GLASSMORPHISM COMPONENTS ===== */
+
+/* Glass Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-mountain);
+    padding: var(--space-arm);
+    box-shadow: 
+        var(--glass-shadow),
+        inset 0 1px 0 var(--white-50),
+        inset 0 -1px 0 var(--shadow-whisper);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: var(--space-arm);
+    transition: 
+        transform var(--duration-gentle) var(--ease-spring),
+        box-shadow var(--duration-gentle) var(--ease-breathe),
+        background var(--duration-gentle) var(--ease-breathe);
+}
+
+/* Subtle shimmer on glass card */
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--white-20),
+        transparent
+    );
+    transition: left var(--duration-slow) var(--ease-silk);
+    pointer-events: none;
+}
+
+.glass-card:hover {
+    transform: translateY(-3px) rotate(0.2deg);
+    box-shadow: var(--glass-shadow-hover);
+    background: var(--glass-bg-hover);
+}
+
+.glass-card:hover::before {
+    left: 150%;
+}
+
+/* Glass Header */
+.glass-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur-heavy));
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-mountain);
+    padding: var(--space-hand) var(--space-arm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-arm);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 20px var(--shadow-silk),
+        inset 0 1px 0 var(--white-60);
+}
+
+/* Animated gradient line under header */
+.glass-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-blush),
+        var(--accent-mint),
+        var(--accent-sky),
+        transparent
+    );
+    animation: shimmer-line 6s linear infinite;
+}
+
+/* Glass Footer */
+.glass-footer {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-mountain);
+    padding: var(--space-hand) var(--space-arm);
+    text-align: center;
+    margin-top: var(--space-arm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-hand);
+    box-shadow: 0 -4px 20px var(--shadow-silk);
+}
+
+.glass-footer p {
+    color: var(--text-pewter);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Glass Bubble */
+.glass-bubble {
+    background: var(--white-80);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-full);
+    padding: var(--space-touch) var(--space-hand);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-breath);
+    transition: all var(--duration-normal) var(--ease-spring);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-bubble::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--white-30);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all var(--duration-gentle) var(--ease-bloom);
+}
+
+.glass-bubble:hover {
+    background: var(--white-90);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow-stone);
+}
+
+.glass-bubble:hover::before {
+    width: 250%;
+    height: 250%;
+}
+
+/* Glass Input */
+.glass-input {
+    width: 100%;
+    background: var(--white-80);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-rock);
+    padding: var(--space-touch) var(--space-hand);
+    color: var(--text-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: all var(--duration-normal) var(--ease-flutter);
+    outline: none;
+}
+
+.glass-input::placeholder {
+    color: var(--text-silver);
+    transition: all var(--duration-normal) var(--ease-breathe);
+}
+
+.glass-input:hover {
+    border-color: var(--shadow-stone);
+    background: var(--white-90);
+}
+
+.glass-input:focus {
+    border-color: var(--text-slate);
+    background: var(--white-95);
+    box-shadow: 
+        0 0 0 3px var(--shadow-feather),
+        0 4px 15px var(--shadow-silk);
+}
+
+.glass-input:focus::placeholder {
+    opacity: 0.5;
+    transform: translateX(10px);
+}
+
+textarea.glass-input {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* ===== LOGO ===== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+    text-decoration: none;
+    color: var(--text-ink);
+}
+
+.logo-icon {
+    font-size: 2rem;
+    animation: logo-float 4s var(--ease-wave) infinite;
+    filter: drop-shadow(2px 2px 4px var(--shadow-silk));
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--text-ink), var(--text-slate));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+    animation: logo-text-appear 1s var(--ease-silk) both;
+}
+
+/* ===== LIVE INDICATOR ===== */
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-breath);
+    padding: var(--space-breath) var(--space-hand);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all var(--duration-normal) var(--ease-breathe);
+}
+
+.live-indicator.online {
+    background: var(--status-online-bg);
+    border: 1px solid var(--status-online);
+    color: var(--status-online);
+    animation: glow-pulse-green 2.5s var(--ease-breathe) infinite;
+}
+
+.live-indicator.online .dot {
+    width: 10px;
+    height: 10px;
+    background: var(--status-online);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s var(--ease-breathe) infinite;
+    box-shadow: 0 0 8px var(--status-online);
+}
+
+.live-indicator.offline {
+    background: var(--status-offline-bg);
+    border: 1px solid var(--status-offline);
+    color: var(--status-offline);
+}
+
+.live-indicator.offline .dot {
+    width: 10px;
+    height: 10px;
+    background: var(--status-offline);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.live-indicator:hover {
+    transform: scale(1.05);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-arm);
+    margin-bottom: var(--space-arm);
+}
+
+/* ===== CARD HEADER ===== */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-hand);
+    padding-bottom: var(--space-touch);
+    border-bottom: 1px solid var(--shadow-feather);
+    position: relative;
+}
+
+.card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--text-slate), transparent);
+    border-radius: var(--radius-full);
+    animation: underline-breathe 3s var(--ease-wave) infinite;
+}
+
+.card-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    display: flex;
+    align-items: center;
+    gap: var(--space-breath);
+    margin: 0;
+}
+
+/* ===== CARD BODY ===== */
+.card-body {
+    position: relative;
+}
+
+/* ===== STATUS DISPLAY ===== */
+.status-display {
+    text-align: center;
+    padding: var(--space-step) var(--space-hand);
+}
+
+.status-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-touch);
+    display: inline-block;
+}
+
+.online-icon {
+    animation: heartbeat 1.5s var(--ease-breathe) infinite;
+    filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));
+}
+
+.offline-icon {
+    animation: icon-swing 3s var(--ease-wave) infinite;
+    opacity: 0.6;
+}
+
+.status-display p {
+    color: var(--text-pewter);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* ===== LIVE INFO ===== */
+.live-info {
+    margin-top: var(--space-hand);
+    animation: fade-in-up 0.5s var(--ease-spring) both;
+}
+
+.live-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-graphite);
+    margin-bottom: var(--space-touch);
+}
+
+/* ===== SCHEDULE ===== */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-touch);
+}
+
+.schedule-item {
+    padding: var(--space-touch) var(--space-hand);
+    background: var(--white-60);
+    border-radius: var(--radius-rock);
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+    transition: all var(--duration-normal) var(--ease-spring);
+    border: 1px solid transparent;
+}
+
+.schedule-item:hover {
+    background: var(--white-80);
+    border-color: var(--shadow-feather);
+    transform: translateX(5px);
+}
+
+.schedule-icon {
+    font-size: 1.25rem;
+    animation: bounce-soft 2.5s var(--ease-wave) infinite;
+}
+
+.schedule-date {
+    color: var(--text-slate);
+    font-size: 0.95rem;
+}
+
+/* ===== LOCKED CONTENT ===== */
+.locked-content {
+    text-align: center;
+    padding: var(--space-step);
+    opacity: 0.8;
+}
+
+.lock-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-touch);
+    animation: shake-lock 4s var(--ease-wave) infinite;
+    display: inline-block;
+}
+
+.locked-content p {
+    color: var(--text-pewter);
+    margin: 0;
+}
+
+/* ===== REPLAY LIST ===== */
+.replay-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-breath);
+}
+
+.replay-item {
+    padding: var(--space-touch) var(--space-hand);
+}
+
+/* ===== TOKEN FORM ===== */
+.token-form {
+    display: flex;
+    gap: var(--space-touch);
+    margin-bottom: var(--space-hand);
+}
+
+.token-form .glass-input {
+    flex: 1;
+}
+
+.token-message {
+    padding: var(--space-touch) var(--space-hand);
+    border-radius: var(--radius-rock);
+    margin-top: var(--space-touch);
+    animation: fade-in-up 0.3s var(--ease-spring) both;
+}
+
+.token-message.error {
+    background: var(--status-offline-bg);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--status-offline);
+}
+
+.token-message.success {
+    background: var(--status-online-bg);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: var(--status-online);
+}
+
+.valid-token-info {
+    background: var(--status-online-bg);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-rock);
+    padding: var(--space-hand);
+    text-align: center;
+    color: var(--status-online);
+    animation: scale-in-center 0.5s var(--ease-bloom) both;
+}
+
+.valid-token-info p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ===== NOTIFICATIONS ===== */
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-touch);
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: var(--space-breath);
+}
+
+.notification-item {
+    padding: var(--space-touch) var(--space-hand);
+    background: var(--white-60);
+    border-radius: var(--radius-rock);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-touch);
+    transition: all var(--duration-normal) var(--ease-flutter);
+    border: 1px solid transparent;
+}
+
+.notification-item:hover {
+    background: var(--white-80);
+    border-color: var(--shadow-feather);
+}
+
+.notif-icon {
+    font-size: 1.25rem;
+    animation: ring 3s var(--ease-wave) infinite;
+    flex-shrink: 0;
+}
+
+.notif-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-content p {
+    margin: 0 0 var(--space-whisper) 0;
+    line-height: 1.5;
+    color: var(--text-graphite);
+    font-size: 0.95rem;
+}
+
+.notif-time {
+    font-size: 0.8rem;
+    color: var(--text-silver);
+}
+
+.no-notif {
+    text-align: center;
+    color: var(--text-silver);
+    padding: var(--space-arm);
+    font-style: italic;
+}
+
+/* ===== BUTTONS ===== */
+
+/* Primary Button */
+.btn-primary {
+    position: relative;
+    background: var(--white-pure);
+    color: var(--text-ink);
+    border: 1px solid var(--shadow-cotton);
+    border-radius: var(--radius-rock);
+    padding: var(--space-touch) var(--space-arm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-breath);
+    overflow: hidden;
+    transition: all var(--duration-normal) var(--ease-spring);
+    box-shadow: 
+        2px 2px 0 var(--shadow-feather),
+        4px 4px 0 var(--shadow-whisper);
+    animation: btn-breathe 4s var(--ease-breathe) infinite;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--accent-mint) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all var(--duration-gentle) var(--ease-bloom);
+    z-index: 0;
+}
+
+.btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 
+        4px 4px 0 var(--shadow-cotton),
+        8px 8px 0 var(--shadow-feather);
+    border-color: var(--shadow-stone);
+}
+
+.btn-primary:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.btn-primary:active {
+    transform: translate(1px, 1px);
+    box-shadow: 
+        1px 1px 0 var(--shadow-feather);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    position: relative;
+    background: transparent;
+    color: var(--text-slate);
+    border: 1px solid var(--shadow-cotton);
+    border-radius: var(--radius-rock);
+    padding: var(--space-touch) var(--space-arm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-breath);
+    overflow: hidden;
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--white-30), transparent);
+    transition: left var(--duration-gentle) var(--ease-silk);
+}
+
+.btn-secondary:hover {
+    background: var(--white-50);
+    border-color: var(--shadow-stone);
+    color: var(--text-ink);
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+
+/* Button Full Width */
+.btn-full {
+    width: 100%;
+}
+
+/* Button Large */
+.btn-large {
+    padding: var(--space-hand) var(--space-step);
+    font-size: 1.1rem;
+}
+
+/* Small Button */
+.btn-small {
+    padding: var(--space-breath) var(--space-touch);
+    font-size: 0.85rem;
+    border-radius: var(--radius-stone);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: var(--status-offline-bg);
+    color: var(--status-offline);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-rock);
+    padding: var(--space-touch) var(--space-arm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-breath);
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: var(--status-offline);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+}
+
+/* Success Button */
+.btn-success {
+    background: var(--status-online-bg);
+    color: var(--status-online);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-rock);
+    padding: var(--space-touch) var(--space-arm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-breath);
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.btn-success:hover {
+    background: rgba(34, 197, 94, 0.25);
+    border-color: var(--status-online);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+}
+
+/* Copy Button */
+.btn-copy {
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: var(--space-breath);
+    border-radius: var(--radius-stone);
+    transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.btn-copy:hover {
+    transform: scale(1.2) rotate(10deg);
+    background: var(--white-50);
+}
+
+/* ===== ADMIN LINK ===== */
+.admin-link {
+    color: var(--text-silver);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-whisper);
+    transition: all var(--duration-normal) var(--ease-breathe);
+}
+
+.admin-link:hover {
+    color: var(--text-ink);
+}
+
+/* ===== LOGIN PANEL ===== */
+.login-panel {
+    max-width: 420px;
+    margin: 80px auto;
+    animation: fade-in-up 0.8s var(--ease-spring) both;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--space-arm);
+}
+
+.login-icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: var(--space-hand);
+    animation: bounce-in 0.8s var(--ease-bloom) both;
+}
+
+.login-header h1 {
+    font-size: 1rem;
+    font-weight: 450;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-hand);
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: var(--space-arm);
+    color: var(--text-silver);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all var(--duration-normal) var(--ease-breathe);
+}
+
+.back-link:hover {
+    color: var(--text-ink);
+    transform: translateX(-5px);
+}
+
+/* ===== INPUT GROUP ===== */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-breath);
+    position: relative;
+}
+
+.input-group label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-slate);
+    transition: color var(--duration-normal) var(--ease-breathe);
+}
+
+.input-group:focus-within label {
+    color: var(--text-ink);
+}
+
+/* ===== ERROR TEXT ===== */
+.error-text {
+    background: var(--status-offline-bg);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--status-offline);
+    padding: var(--space-touch) var(--space-hand);
+    border-radius: var(--radius-rock);
+    text-align: center;
+    font-size: 0.95rem;
+    animation: shake-horizontal 0.5s var(--ease-spring) both;
+}
+
+/* ===== ADMIN DASHBOARD ===== */
+.admin-dashboard {
+    animation: fade-in 0.5s var(--ease-silk) both;
+}
+
+.admin-header {
+    flex-wrap: wrap;
+    gap: var(--space-hand);
+}
+
+.admin-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+}
+
+.admin-title span {
+    font-size: 1.75rem;
+    animation: rotate-gear 8s linear infinite;
+}
+
+.admin-title h1 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-hand);
+}
+
+.admin-email {
+    font-size: 0.9rem;
+    color: var(--text-pewter);
+    background: var(--white-60);
+    padding: var(--space-whisper) var(--space-touch);
+    border-radius: var(--radius-full);
+}
+
+.admin-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-arm);
+}
+
+.admin-card {
+    min-height: 200px;
+}
+
+/* ===== STREAM CONTROL ===== */
+.stream-badge {
+    padding: var(--space-whisper) var(--space-touch);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.stream-badge.online {
+    background: var(--status-online);
+    color: white;
+    animation: pulse-badge 2s var(--ease-breathe) infinite;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+.stream-badge.offline {
+    background: var(--status-offline);
+    color: white;
+}
+
+.stream-settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-hand);
+    margin-bottom: var(--space-arm);
+}
+
+.stream-buttons {
+    display: flex;
+    gap: var(--space-touch);
+    flex-wrap: wrap;
+}
+
+.preview-container {
+    border-radius: var(--radius-rock);
+    overflow: hidden;
+    background: var(--text-ink);
+    position: relative;
+    margin-top: var(--space-hand);
+    border: 2px solid var(--shadow-stone);
+}
+
+.preview-container video {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    display: block;
+}
+
+.preview-label {
+    position: absolute;
+    bottom: var(--space-breath);
+    left: var(--space-breath);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    padding: var(--space-whisper) var(--space-touch);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== VIEWER MANAGEMENT ===== */
+.viewer-count,
+.complaint-count {
+    background: linear-gradient(135deg, var(--text-slate), var(--text-graphite));
+    color: white;
+    padding: var(--space-whisper) var(--space-touch);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+    animation: count-pop 0.3s var(--ease-bloom);
+}
+
+.viewer-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-breath);
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: var(--space-breath);
+}
+
+.viewer-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-breath);
+    padding: var(--space-touch) var(--space-hand);
+    background: var(--white-60);
+    border-radius: var(--radius-rock);
+    transition: all var(--duration-normal) var(--ease-flutter);
+    border: 1px solid transparent;
+}
+
+.viewer-item:hover {
+    background: var(--white-80);
+    border-color: var(--shadow-feather);
+}
+
+.viewer-icon {
+    font-size: 1.1rem;
+}
+
+.viewer-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text-graphite);
+}
+
+.viewer-status {
+    font-size: 0.7rem;
+    padding: var(--space-whisper) var(--space-breath);
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.viewer-status.pending {
+    background: var(--status-pending-bg);
+    color: var(--status-pending);
+    animation: blink 1.5s var(--ease-breathe) infinite;
+}
+
+.viewer-status.connected {
+    background: var(--status-online-bg);
+    color: var(--status-online);
+}
+
+.viewer-status.offered,
+.viewer-status.answered {
+    background: var(--status-info-bg);
+    color: var(--status-info);
+}
+
+.no-viewers {
+    text-align: center;
+    color: var(--text-silver);
+    padding: var(--space-arm);
+    font-style: italic;
+}
+
+/* ===== TOKEN GENERATOR ===== */
+.token-generator {
+    display: flex;
+    gap: var(--space-touch);
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.generated-token {
+    background: var(--status-online-bg);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-rock);
+    padding: var(--space-hand);
+    margin: var(--space-hand) 0;
+    animation: slide-in-bottom 0.4s var(--ease-spring) both;
+}
+
+.token-label {
+    font-size: 0.9rem;
+    color: var(--text-pewter);
+    margin-bottom: var(--space-breath);
+}
+
+.token-display {
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+}
+
+.token-display code {
+    flex: 1;
+    background: var(--white-80);
+    padding: var(--space-touch);
+    border-radius: var(--radius-stone);
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--status-online);
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.token-list h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-slate);
+    margin-bottom: var(--space-touch);
+}
+
+.active-tokens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-breath);
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.token-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+    padding: var(--space-touch) var(--space-hand);
+    background: var(--white-60);
+    border-radius: var(--radius-rock);
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.token-item:hover {
+    background: var(--white-80);
+}
+
+.token-item code {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--text-slate);
+}
+
+.token-expiry {
+    font-size: 0.75rem;
+    color: var(--text-silver);
+}
+
+.no-tokens {
+    text-align: center;
+    color: var(--text-silver);
+    padding: var(--space-hand);
+    font-style: italic;
+}
+
+/* ===== NOTIFICATION FORM ===== */
+.notif-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-touch);
+}
+
+.status-text {
+    padding: var(--space-touch) var(--space-hand);
+    border-radius: var(--radius-rock);
+    text-align: center;
+    margin-top: var(--space-touch);
+    font-size: 0.95rem;
+}
+
+.status-text.success {
+    background: var(--status-online-bg);
+    color: var(--status-online);
+}
+
+.status-text.error {
+    background: var(--status-offline-bg);
+    color: var(--status-offline);
+}
+
+/* ===== COMPLAINTS ===== */
+.complaint-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-touch);
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: var(--space-breath);
+}
+
+.complaint-item {
+    background: var(--white-60);
+    border-radius: var(--radius-rock);
+    padding: var(--space-hand);
+    border: 1px solid transparent;
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.complaint-item:hover {
+    background: var(--white-80);
+    border-color: var(--shadow-feather);
+}
+
+.complaint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-breath);
+}
+
+.complaint-sender {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-graphite);
+}
+
+.complaint-time {
+    font-size: 0.8rem;
+    color: var(--text-silver);
+}
+
+.complaint-message {
+    margin-bottom: var(--space-touch);
+    line-height: 1.6;
+    color: var(--text-slate);
+}
+
+.complaint-reply {
+    background: var(--status-info-bg);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-stone);
+    padding: var(--space-breath) var(--space-touch);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-breath);
+    color: var(--text-graphite);
+}
+
+.complaint-actions {
+    display: flex;
+    gap: var(--space-breath);
+    padding-top: var(--space-breath);
+    border-top: 1px solid var(--shadow-feather);
+}
+
+.no-complaints {
+    text-align: center;
+    color: var(--text-silver);
+    padding: var(--space-arm);
+    font-style: italic;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white-80);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fade-in 0.3s var(--ease-silk) both;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    animation: modal-scale-in 0.4s var(--ease-bloom) both;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-arm);
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-silver);
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-spring);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--text-ink);
+    background: var(--white-50);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    margin-bottom: var(--space-arm);
+}
+
+.original-complaint {
+    background: var(--white-60);
+    padding: var(--space-hand);
+    border-radius: var(--radius-rock);
+    margin-bottom: var(--space-hand);
+    border-left: 3px solid var(--text-slate);
+    color: var(--text-slate);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-touch);
+    padding-top: var(--space-hand);
+    border-top: 1px solid var(--shadow-feather);
+}
+
+/* ===== STREAM PAGE ===== */
+
+/* Token Validation */
+.token-validation {
+    max-width: 420px;
+    margin: 80px auto;
+    animation: fade-in-up 0.8s var(--ease-spring) both;
+}
+
+.validation-header {
+    text-align: center;
+    margin-bottom: var(--space-arm);
+}
+
+.validation-icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: var(--space-hand);
+    animation: icon-float 4s var(--ease-wave) infinite;
+}
+
+.validation-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.validation-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-hand);
+    margin-top: var(--space-arm);
+}
+
+/* Stream Container */
+.stream-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.stream-header {
+    flex-wrap: wrap;
+    gap: var(--space-hand);
+}
+
+.stream-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-touch);
+}
+
+.stream-info h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.live-badge {
+    background: var(--status-offline);
+    color: white;
+    padding: var(--space-whisper) var(--space-touch);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.stream-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-hand);
+}
+
+.connection-status {
+    font-size: 0.9rem;
+    padding: var(--space-whisper) var(--space-touch);
+    background: var(--white-60);
+    border-radius: var(--radius-full);
+    color: var(--text-pewter);
+    display: flex;
+    align-items: center;
+    gap: var(--space-whisper);
+}
+
+.stream-main {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--space-arm);
+    flex: 1;
+    margin-bottom: var(--space-arm);
+}
+
+/* Video Container */
+.video-container {
+    position: relative;
+    background: var(--text-ink);
+    border-radius: var(--radius-mountain);
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--shadow-stone);
+    box-shadow: var(--glass-shadow);
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spinner-rotate 1s linear infinite;
+    margin-bottom: var(--space-hand);
+}
+
+.video-overlay p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    animation: pulse-text 2s var(--ease-breathe) infinite;
+}
+
+.video-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-hand);
+    animation: shake-horizontal 0.5s var(--ease-spring);
+}
+
+.video-error p {
+    margin-bottom: var(--space-arm);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Complaint Container (Stream Page) */
+.complaint-container {
+    margin-bottom: var(--space-arm);
+}
+
+.complaint-container .complaint-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin-bottom: var(--space-hand);
+}
+
+.complaint-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-touch);
+    margin-bottom: var(--space-arm);
+}
+
+.my-complaints h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-slate);
+    margin-bottom: var(--space-touch);
+}
+
+.my-complaint-item {
+    background: var(--white-60);
+    padding: var(--space-hand);
+    border-radius: var(--radius-rock);
+    margin-bottom: var(--space-breath);
+    border: 1px solid transparent;
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.my-complaint-item:hover {
+    background: var(--white-80);
+    border-color: var(--shadow-feather);
+}
+
+.my-complaint-item .complaint-content p {
+    margin-bottom: var(--space-whisper);
+    color: var(--text-graphite);
+}
+
+.my-complaint-item .complaint-time {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-silver);
+}
+
+.my-complaint-item .complaint-reply {
+    margin-top: var(--space-touch);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-breath);
+    animation: slide-in-right 0.4s var(--ease-spring) both;
+}
+
+.reply-icon {
+    font-size: 1rem;
+}
+
+.no-complaints-text {
+    font-size: 0.9rem;
+    color: var(--text-silver);
+    text-align: center;
+    font-style: italic;
+    padding: var(--space-hand);
+}
+
+/* Notifications Panel (Stream Page) */
+.notifications-panel {
+    position: fixed;
+    bottom: var(--space-arm);
+    right: var(--space-arm);
+    width: 300px;
+    max-height: 260px;
+    z-index: 100;
+    animation: slide-in-right 0.5s var(--ease-spring) both;
+}
+
+.notif-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin-bottom: var(--space-touch);
+    display: flex;
+    align-items: center;
+    gap: var(--space-breath);
+}
+
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-breath);
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: var(--space-breath);
+}
+
+.notif-item {
+    background: var(--white-60);
+    padding: var(--space-touch);
+    border-radius: var(--radius-stone);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-whisper);
+    transition: all var(--duration-normal) var(--ease-flutter);
+}
+
+.notif-item:hover {
+    background: var(--white-80);
+}
+
+.notif-item .notif-icon {
+    font-size: 1rem;
+}
+
+.notif-item p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-graphite);
+    margin: 0;
+}
+
+.notif-item .notif-time {
+    font-size: 0.75rem;
+    color: var(--text-silver);
+}
+
+/* Stream Offline */
+.stream-offline {
+    max-width: 480px;
+    margin: 100px auto;
+    animation: fade-in-up 0.8s var(--ease-spring) both;
+}
+
+.offline-content {
+    text-align: center;
+    padding: var(--space-leap);
+}
+
+.offline-icon {
+    font-size: 5rem;
+    margin-bottom: var(--space-arm);
+    display: block;
+    animation: icon-float 4s var(--ease-wave) infinite;
+}
+
+.offline-content h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-graphite);
+    margin-bottom: var(--space-touch);
+}
+
+.offline-content p {
+    color: var(--text-pewter);
+    margin-bottom: var(--space-arm);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--text-silver);
+}
+
+
+/* ============================================
+   100+ ORGANIC ANIMATIONS
+   ============================================ */
+
+/* ===== 1-10: BACKGROUND & AMBIENT ===== */
+
+/* 1. Background drift */
+@keyframes background-drift {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 50%, 0% 100%, 100% 0%;
+    }
+    33% {
+        background-position: 25% 15%, 75% 85%, 60% 40%, 20% 80%, 80% 20%;
+    }
+    66% {
+        background-position: 15% 30%, 85% 70%, 45% 55%, 30% 70%, 70% 30%;
+    }
+    100% {
+        background-position: 5% 10%, 95% 90%, 55% 45%, 10% 90%, 90% 10%;
+    }
+}
+
+/* 2. Dust float */
+@keyframes dust-float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(-500px, -500px) rotate(45deg);
+    }
+}
+
+/* 3. Shimmer line */
+@keyframes shimmer-line {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* 4. Underline breathe */
+@keyframes underline-breathe {
+    0%, 100% {
+        width: 50px;
+        opacity: 1;
+    }
+    50% {
+        width: 80px;
+        opacity: 0.7;
+    }
+}
+
+/* 5. Glow pulse green */
+@keyframes glow-pulse-green {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(34, 197, 94, 0.3), 0 0 15px rgba(34, 197, 94, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(34, 197, 94, 0.5), 0 0 30px rgba(34, 197, 94, 0.3);
+    }
+}
+
+/* 6. Pulse dot */
+@keyframes pulse-dot {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* 7. Pulse badge */
+@keyframes pulse-badge {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+}
+
+/* 8. Pulse text */
+@keyframes pulse-text {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* 9. Count pop */
+@keyframes count-pop {
+    0% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 10. Blink */
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* ===== 11-20: FADE ANIMATIONS ===== */
+
+/* 11. Fade in */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.6s var(--ease-silk) both;
+}
+
+/* 12. Fade in up */
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fade-in-up 0.6s var(--ease-flutter) both;
+}
+
+/* 13. Fade in down */
+@keyframes fade-in-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 14. Fade in left */
+@keyframes fade-in-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 15. Fade in right */
+@keyframes fade-in-right {
+    0% {
+        opacity: 0;
+        transform: translateX(25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 16. Fade in forward */
+@keyframes fade-in-fwd {
+    0% {
+        opacity: 0;
+        transform: translateZ(-60px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+    }
+}
+
+.fade-in-fwd {
+    animation: fade-in-fwd 0.6s var(--ease-silk) both;
+}
+
+/* 17. Fade out */
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* 18. Fade out down */
+@keyframes fade-out-down {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+}
+
+/* 19. Fade scale */
+@keyframes fade-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 20. Fade blur */
+@keyframes fade-blur {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* ===== 21-30: SCALE ANIMATIONS ===== */
+
+/* 21. Scale in center */
+@keyframes scale-in-center {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scale-in-center {
+    animation: scale-in-center 0.5s var(--ease-bloom) both;
+}
+
+/* 22. Scale in top */
+@keyframes scale-in-top {
+    0% {
+        transform: scale(0);
+        transform-origin: 50% 0%;
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        transform-origin: 50% 0%;
+        opacity: 1;
+    }
+}
+
+/* 23. Scale in bottom */
+@keyframes scale-in-bottom {
+    0% {
+        transform: scale(0);
+        transform-origin: 50% 100%;
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        transform-origin: 50% 100%;
+        opacity: 1;
+    }
+}
+
+/* 24. Scale out center */
+@keyframes scale-out-center {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.scale-out-center {
+    animation: scale-out-center 0.5s var(--ease-sway) both;
+}
+
+/* 25. Scale up */
+@keyframes scale-up {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 26. Scale bounce */
+@keyframes scale-bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(0.98);
+    }
+    75% {
+        transform: scale(1.02);
+    }
+}
+
+/* 27. Pop */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.12);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 28. Zoom in */
+@keyframes zoom-in {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 29. Zoom out */
+@keyframes zoom-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* 30. Elastic scale */
+@keyframes elastic-scale {
+    0% {
+        transform: scale(0);
+    }
+    55% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(0.95);
+    }
+    85% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===== 31-40: SLIDE ANIMATIONS ===== */
+
+/* 31. Slide in top */
+@keyframes slide-in-top {
+    0% {
+        transform: translateY(-80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 32. Slide in bottom */
+@keyframes slide-in-bottom {
+    0% {
+        transform: translateY(80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 33. Slide in left */
+@keyframes slide-in-left {
+    0% {
+        transform: translateX(-80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 34. Slide in right */
+@keyframes slide-in-right {
+    0% {
+        transform: translateX(80px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-right {
+    animation: slide-in-right 0.5s var(--ease-flutter) both;
+}
+
+/* 35. Slide in blurred top */
+@keyframes slide-in-blurred-top {
+    0% {
+        transform: translateY(-80px) scaleY(2) scaleX(0.3);
+        filter: blur(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-blurred-top {
+    animation: slide-in-blurred-top 0.6s var(--ease-silk) both;
+}
+
+/* 36. Slide in blurred bottom */
+@keyframes slide-in-blurred-bottom {
+    0% {
+        transform: translateY(80px) scaleY(2) scaleX(0.3);
+        filter: blur(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* 37. Slide out top */
+@keyframes slide-out-top {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-80px);
+        opacity: 0;
+    }
+}
+
+/* 38. Slide out bottom */
+@keyframes slide-out-bottom {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(80px);
+        opacity: 0;
+    }
+}
+
+/* 39. Slide out left */
+@keyframes slide-out-left {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-80px);
+        opacity: 0;
+    }
+}
+
+/* 40. Slide out right */
+@keyframes slide-out-right {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(80px);
+        opacity: 0;
+    }
+}
+
+/* ===== 41-50: BOUNCE ANIMATIONS ===== */
+
+/* 41. Bounce in */
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    70% {
+        transform: scale(0.92);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 42. Bounce in top */
+@keyframes bounce-in-top {
+    0% {
+        transform: translateY(-400px);
+        opacity: 0;
+    }
+    38% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    55% {
+        transform: translateY(-50px);
+    }
+    72% {
+        transform: translateY(0);
+    }
+    81% {
+        transform: translateY(-20px);
+    }
+    90% {
+        transform: translateY(0);
+    }
+    95% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 43. Bounce in bottom */
+@keyframes bounce-in-bottom {
+    0% {
+        transform: translateY(400px);
+        opacity: 0;
+    }
+    38% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    55% {
+        transform: translateY(50px);
+    }
+    72% {
+        transform: translateY(0);
+    }
+    81% {
+        transform: translateY(20px);
+    }
+    90% {
+        transform: translateY(0);
+    }
+    95% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 44. Bounce soft */
+@keyframes bounce-soft {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* 45. Bounce horizontal */
+@keyframes bounce-horizontal {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-8px);
+    }
+}
+
+/* 46. Bounce scale */
+@keyframes bounce-scale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.08);
+    }
+    60% {
+        transform: scale(0.96);
+    }
+}
+
+/* 47. Bounce rotate */
+@keyframes bounce-rotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(8deg);
+    }
+    50% {
+        transform: rotate(-6deg);
+    }
+    75% {
+        transform: rotate(4deg);
+    }
+}
+
+/* 48. Elastic bounce */
+@keyframes elastic-bounce {
+    0% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    65% {
+        transform: translateY(-10px);
+    }
+    80% {
+        transform: translateY(0);
+    }
+    90% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 49. Rubber band */
+@keyframes rubber-band {
+    0%, 100% {
+        transform: scaleX(1);
+    }
+    30% {
+        transform: scaleX(1.25) scaleY(0.75);
+    }
+    40% {
+        transform: scaleX(0.75) scaleY(1.25);
+    }
+    50% {
+        transform: scaleX(1.15) scaleY(0.85);
+    }
+    65% {
+        transform: scaleX(0.95) scaleY(1.05);
+    }
+    75% {
+        transform: scaleX(1.05) scaleY(0.95);
+    }
+}
+
+/* 50. Spring */
+@keyframes spring {
+    0% {
+        transform: scale(0.5);
+    }
+    40% {
+        transform: scale(1.1);
+    }
+    60% {
+        transform: scale(0.95);
+    }
+    80% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===== 51-60: SHAKE ANIMATIONS ===== */
+
+/* 51. Shake horizontal */
+@keyframes shake-horizontal {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70% {
+        transform: translateX(-8px);
+    }
+    20%, 40%, 60% {
+        transform: translateX(8px);
+    }
+    80% {
+        transform: translateX(5px);
+    }
+    90% {
+        transform: translateX(-5px);
+    }
+}
+
+.shake-horizontal {
+    animation: shake-horizontal 0.5s var(--ease-spring) both;
+}
+
+/* 52. Shake vertical */
+@keyframes shake-vertical {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    10%, 30%, 50%, 70% {
+        transform: translateY(-6px);
+    }
+    20%, 40%, 60% {
+        transform: translateY(6px);
+    }
+    80% {
+        transform: translateY(4px);
+    }
+    90% {
+        transform: translateY(-4px);
+    }
+}
+
+/* 53. Shake bottom */
+@keyframes shake-bottom {
+    0%, 100% {
+        transform: rotate(0deg);
+        transform-origin: 50% 100%;
+    }
+    10% {
+        transform: rotate(2deg);
+    }
+    20%, 40%, 60% {
+        transform: rotate(-4deg);
+    }
+    30%, 50%, 70% {
+        transform: rotate(4deg);
+    }
+    80% {
+        transform: rotate(-2deg);
+    }
+    90% {
+        transform: rotate(2deg);
+    }
+}
+
+.shake-bottom {
+    animation: shake-bottom 0.5s var(--ease-spring) both;
+}
+
+/* 54. Shake top */
+@keyframes shake-top {
+    0%, 100% {
+        transform: rotate(0deg);
+        transform-origin: 50% 0%;
+    }
+    10% {
+        transform: rotate(2deg);
+    }
+    20%, 40%, 60% {
+        transform: rotate(-4deg);
+    }
+    30%, 50%, 70% {
+        transform: rotate(4deg);
+    }
+    80% {
+        transform: rotate(-2deg);
+    }
+    90% {
+        transform: rotate(2deg);
+    }
+}
+
+/* 55. Shake lock */
+@keyframes shake-lock {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    15% {
+        transform: rotate(-8deg);
+    }
+    30% {
+        transform: rotate(8deg);
+    }
+    45% {
+        transform: rotate(-6deg);
+    }
+    60% {
+        transform: rotate(6deg);
+    }
+    75% {
+        transform: rotate(-3deg);
+    }
+    85% {
+        transform: rotate(3deg);
+    }
+}
+
+/* 56. Wobble */
+@keyframes wobble {
+    0%, 100% {
+        transform: translateX(0%);
+    }
+    15% {
+        transform: translateX(-20px) rotate(-4deg);
+    }
+    30% {
+        transform: translateX(15px) rotate(3deg);
+    }
+    45% {
+        transform: translateX(-12px) rotate(-2deg);
+    }
+    60% {
+        transform: translateX(8px) rotate(1deg);
+    }
+    75% {
+        transform: translateX(-4px) rotate(-0.5deg);
+    }
+}
+
+/* 57. Jiggle */
+@keyframes jiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2deg);
+    }
+    50% {
+        transform: rotate(2deg);
+    }
+    75% {
+        transform: rotate(-1deg);
+    }
+}
+
+/* 58. Vibrate */
+@keyframes vibrate {
+    0%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(2px, -2px);
+    }
+    60% {
+        transform: translate(-2px, -2px);
+    }
+    80% {
+        transform: translate(2px, 2px);
+    }
+}
+
+/* 59. Tremor */
+@keyframes tremor {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0);
+    }
+    10% {
+        transform: translate(-1px, 1px) rotate(-0.5deg);
+    }
+    20% {
+        transform: translate(1px, -1px) rotate(0.5deg);
+    }
+    30% {
+        transform: translate(-1px, 0) rotate(0);
+    }
+    40% {
+        transform: translate(1px, 1px) rotate(-0.5deg);
+    }
+    50% {
+        transform: translate(0, -1px) rotate(0.5deg);
+    }
+}
+
+/* 60. Jello horizontal */
+@keyframes jello-horizontal {
+    0%, 100% {
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        transform: scale3d(1.2, 0.8, 1);
+    }
+    40% {
+        transform: scale3d(0.8, 1.2, 1);
+    }
+    50% {
+        transform: scale3d(1.1, 0.9, 1);
+    }
+    65% {
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        transform: scale3d(1.03, 0.97, 1);
+    }
+}
+
+.jello-horizontal {
+    animation: jello-horizontal 0.9s var(--ease-elastic) both;
+}
+
+/* ===== 61-70: ROTATE ANIMATIONS ===== */
+
+/* 61. Rotate in */
+@keyframes rotate-in {
+    0% {
+        transform: rotate(-180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+/* 62. Rotate out */
+@keyframes rotate-out {
+    0% {
+        transform: rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* 63. Rotate gear */
+@keyframes rotate-gear {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 64. Spinner rotate */
+@keyframes spinner-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 65. Rotate swing */
+@keyframes rotate-swing {
+    0%, 100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+/* 66. Pendulum */
+@keyframes pendulum {
+    0%, 100% {
+        transform: rotate(15deg);
+        transform-origin: top center;
+    }
+    50% {
+        transform: rotate(-15deg);
+        transform-origin: top center;
+    }
+}
+
+/* 67. Flip horizontal */
+@keyframes flip-horizontal {
+    0% {
+        transform: rotateY(0);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+/* 68. Flip vertical */
+@keyframes flip-vertical {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(180deg);
+    }
+}
+
+/* 69. Rotate scale up */
+@keyframes rotate-scale-up {
+    0% {
+        transform: scale(1) rotate(0);
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+/* 70. Tilt */
+@keyframes tilt {
+    0%, 100% {
+        transform: perspective(800px) rotateY(0) rotateX(0);
+    }
+    25% {
+        transform: perspective(800px) rotateY(3deg) rotateX(2deg);
+    }
+    50% {
+        transform: perspective(800px) rotateY(-2deg) rotateX(-1deg);
+    }
+    75% {
+        transform: perspective(800px) rotateY(2deg) rotateX(1deg);
+    }
+}
+
+/* ===== 71-80: HEARTBEAT & PULSE ===== */
+
+/* 71. Heartbeat */
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.15);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.15);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+
+.heartbeat {
+    animation: heartbeat 1.5s var(--ease-breathe) infinite both;
+}
+
+/* 72. Pulse */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.85;
+    }
+}
+
+/* 73. Ping */
+@keyframes ping {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* 74. Ripple */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* 75. Glow pulse */
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--shadow-silk), 0 0 10px var(--shadow-feather);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--shadow-wool), 0 0 40px var(--shadow-cotton);
+    }
+}
+
+/* 76. Throb */
+@keyframes throb {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+/* 77. Flash */
+@keyframes flash {
+    0%, 50%, 100% {
+        opacity: 1;
+    }
+    25%, 75% {
+        opacity: 0;
+    }
+}
+
+/* 78. Flicker */
+@keyframes flicker {
+    0%, 100% {
+        opacity: 1;
+    }
+    41%, 43% {
+        opacity: 0.8;
+    }
+    42% {
+        opacity: 0.3;
+    }
+    77%, 79% {
+        opacity: 0.9;
+    }
+    78% {
+        opacity: 0.4;
+    }
+}
+
+/* 79. Breathe */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.02);
+        opacity: 0.95;
+    }
+    60% {
+        transform: scale(0.99);
+        opacity: 1;
+    }
+}
+
+/* 80. Ripple out */
+@keyframes ripple-out {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
+}
+
+/* ===== 81-90: FLOAT & SWING ===== */
+
+/* 81. Icon float */
+@keyframes icon-float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-6px) rotate(2deg);
+    }
+    66% {
+        transform: translateY(-3px) rotate(-1deg);
+    }
+}
+
+/* 82. Logo float */
+@keyframes logo-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 83. Icon swing */
+@keyframes icon-swing {
+    0%, 100% {
+        transform: rotate(0deg);
+        transform-origin: top center;
+    }
+    20% {
+        transform: rotate(12deg);
+    }
+    40% {
+        transform: rotate(-8deg);
+    }
+    60% {
+        transform: rotate(4deg);
+    }
+    80% {
+        transform: rotate(-4deg);
+    }
+}
+
+/* 84. Gentle sway */
+@keyframes gentle-sway {
+    0%, 100% {
+        transform: rotate(-1.5deg) translateX(-2px);
+    }
+    50% {
+        transform: rotate(1.5deg) translateX(2px);
+    }
+}
+
+/* 85. Hover float */
+@keyframes hover-float {
+    0%, 100% {
+        transform: translateY(0);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* 86. Levitate */
+@keyframes levitate {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(0.5deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-5px) rotate(-0.5deg);
+    }
+}
+
+/* 87. Wave */
+@keyframes wave {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    10% {
+        transform: rotate(14deg);
+    }
+    20% {
+        transform: rotate(-8deg);
+    }
+    30% {
+        transform: rotate(14deg);
+    }
+    40% {
+        transform: rotate(-4deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(0deg);
+    }
+}
+
+/* 88. Ring */
+@keyframes ring {
+    0% {
+        transform: rotate(0);
+    }
+    5%, 15% {
+        transform: rotate(20deg);
+    }
+    10%, 20% {
+        transform: rotate(-15deg);
+    }
+    25% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+/* 89. Tada */
+@keyframes tada {
+    0%, 100% {
+        transform: scale(1) rotate(0);
+    }
+    10%, 20% {
+        transform: scale(0.9) rotate(-3deg);
+    }
+    30%, 50%, 70%, 90% {
+        transform: scale(1.1) rotate(3deg);
+    }
+    40%, 60%, 80% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+}
+
+/* 90. Wiggle */
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(-10deg);
+    }
+    40% {
+        transform: rotate(8deg);
+    }
+    60% {
+        transform: rotate(-6deg);
+    }
+    80% {
+        transform: rotate(4deg);
+    }
+}
+
+/* ===== 91-100: SPECIAL EFFECTS ===== */
+
+/* 91. Modal scale in */
+@keyframes modal-scale-in {
+    0% {
+        transform: scale(0.85) translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 92. Logo text appear */
+@keyframes logo-text-appear {
+    0% {
+        opacity: 0;
+        transform: translateX(-15px);
+        letter-spacing: 0.15em;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        letter-spacing: -0.02em;
+    }
+}
+
+/* 93. Btn breathe */
+@keyframes btn-breathe {
+    0%, 100% {
+        box-shadow: 
+            2px 2px 0 var(--shadow-feather),
+            4px 4px 0 var(--shadow-whisper);
+    }
+    50% {
+        box-shadow: 
+            3px 3px 0 var(--shadow-cotton),
+            6px 6px 0 var(--shadow-feather);
+    }
+}
+
+/* 94. Morphing blob */
+@keyframes morphing-blob {
+    0%, 100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    25% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+    50% {
+        border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%;
+    }
+    75% {
+        border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%;
+    }
+}
+
+/* 95. Ink spread */
+@keyframes ink-spread {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(150% at 50% 50%);
+    }
+}
+
+/* 96. Paper fold */
+@keyframes paper-fold {
+    0% {
+        transform: perspective(800px) rotateX(80deg);
+        transform-origin: top;
+    }
+    100% {
+        transform: perspective(800px) rotateX(0);
+        transform-origin: top;
+    }
+}
+
+/* 97. Typewriter cursor */
+@keyframes typewriter-cursor {
+    0%, 100% {
+        border-right-color: var(--text-ink);
+    }
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+/* 98. Text reveal */
+@keyframes text-reveal {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* 99. Shimmer */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* 100. Particle float */
+@keyframes particle-float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translate(10px, -15px) rotate(90deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(0, -30px) rotate(180deg);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translate(-10px, -15px) rotate(270deg);
+        opacity: 0.7;
+    }
+}
+
+/* ===== BONUS ANIMATIONS (101-110) ===== */
+
+/* 101. Water drop */
+@keyframes water-drop {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* 102. Leaf fall */
+@keyframes leaf-fall {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* 103. Soft focus */
+@keyframes soft-focus {
+    0%, 100% {
+        filter: blur(0);
+    }
+    50% {
+        filter: blur(1px);
+    }
+}
+
+/* 104. Border dance */
+@keyframes border-dance {
+    0% {
+        border-color: var(--shadow-feather);
+    }
+    25% {
+        border-color: var(--shadow-cotton);
+    }
+    50% {
+        border-color: var(--shadow-linen);
+    }
+    75% {
+        border-color: var(--shadow-silk);
+    }
+    100% {
+        border-color: var(--shadow-feather);
+    }
+}
+
+/* 105. Texture shift */
+@keyframes texture-shift {
+    0%, 100% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 3px 3px;
+    }
+}
+
+/* 106. Crumple */
+@keyframes crumple {
+    0%, 100% {
+        transform: scale(1) rotate(0);
+        filter: none;
+    }
+    50% {
+        transform: scale(0.97) rotate(0.5deg);
+        filter: brightness(0.98);
+    }
+}
+
+/* 107. Organic breathe */
+@keyframes organic-breathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.015);
+        opacity: 0.97;
+    }
+    60% {
+        transform: scale(0.995);
+        opacity: 1;
+    }
+}
+
+/* 108. Brush stroke */
+@keyframes brush-stroke {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* 109. Fog drift */
+@keyframes fog-drift {
+    0% {
+        transform: translateX(-10%);
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateX(10%);
+        opacity: 0.3;
+    }
+}
+
+/* 110. Aurora wave */
+@keyframes aurora-wave {
+    0%, 100% {
+        background-position: 0% 50%;
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        background-position: 100% 50%;
+        filter: hue-rotate(15deg);
+    }
+}
+
+/* ===== ANIMATION DELAYS ===== */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+.delay-8 { animation-delay: 0.8s; }
+.delay-9 { animation-delay: 0.9s; }
+.delay-10 { animation-delay: 1s; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--white-smoke);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--shadow-wool);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--white-smoke);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--shadow-stone);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--shadow-wool) var(--white-smoke);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+    background: var(--accent-butter);
+    color: var(--text-ink);
+}
+
+::-moz-selection {
+    background: var(--accent-butter);
+    color: var(--text-ink);
+}
+
+/* ===== FOCUS VISIBLE ===== */
+:focus-visible {
+    outline: 2px dashed var(--text-silver);
+    outline-offset: 3px;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    body::before,
+    body::after {
+        animation: none !important;
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .stream-main {
+        grid-template-columns: 1fr;
+    }
+    
+    .notifications-panel {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        margin-top: var(--space-arm);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --space-arm: 16px;
+        --space-step: 24px;
+    }
+    
+    .container {
+        padding: var(--space-hand);
+    }
+    
+    .glass-header,
+    .glass-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-touch);
+    }
+    
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-main {
+        grid-template-columns: 1fr;
+    }
+    
+    .token-form {
+        flex-direction: column;
+    }
+    
+    .token-generator {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .stream-buttons {
+        flex-direction: column;
+    }
+    
+    .stream-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stream-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .video-container {
+        min-height: 280px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: var(--space-hand);
+    }
+    
+    .login-panel,
+    .token-validation,
+    .stream-offline {
+        margin: 50px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --space-hand: 12px;
+        --space-arm: 14px;
+        --radius-mountain: 14px;
+    }
+    
+    .glass-card {
+        padding: var(--space-hand);
+    }
+    
+    .card-header h2 {
+        font-size: 1rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+    
+    .login-icon,
+    .validation-icon,
+    .offline-icon,
+    .lock-icon,
+    .status-icon {
+        font-size: 2.5rem;
+    }
+    
+    .btn-primary,
+    .btn-secondary,
+    .btn-success,
+    .btn-danger {
+        width: 100%;
+    }
+    
+    .admin-title h1 {
+        font-size: 1.25rem;
+    }
+    
+    .complaint-actions {
+        flex-direction: column;
+    }
+}
+
+/* ===== PRINT ===== */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    body::before,
+    body::after {
+        display: none !important;
+    }
+    
+    .glass-card,
+    .glass-header,
+    .glass-footer {
+        background: white !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+    
+    .hidden {
+        display: none !important;
+    }
+    
+    * {
+        animation: none !important;
+    }
+}

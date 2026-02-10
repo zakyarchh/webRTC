@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IQ Challenge 2024 - Test Kecerdasan Online</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Tonton Iklan - Token Free</title>
     <style>
         * {
             margin: 0;
@@ -13,740 +12,458 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #0f0f1e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            overflow: hidden;
-            position: relative;
+            justify-content: center;
+            color: white;
+            padding: 20px;
         }
 
-        /* Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 900px;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59, #c471ed, #12c2e9);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            opacity: 0.3;
-            z-index: -2;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Floating Particles */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        .particle::before {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.4; }
-            to {
-                transform: translateY(-100vh) translateX(100px) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Main Container */
-        .main-container {
-            width: 90%;
-            max-width: 600px;
-            animation: slideUp 0.8s ease;
-            z-index: 10;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Logo Section */
-        .logo-section {
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             text-align: center;
-            margin-bottom: 30px;
-            animation: glow 2s ease infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(18, 194, 233, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(18, 194, 233, 0.8)); }
-        }
-
-        .logo {
-            font-size: 4em;
-            margin-bottom: 10px;
-            animation: rotate 4s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         h1 {
-            color: white;
-            font-size: 2.5em;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            font-size: 2.2em;
             margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(18, 194, 233, 0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .tagline {
-            color: #a8a8b3;
+        .subtitle {
             font-size: 1.1em;
-            font-weight: 300;
+            opacity: 0.9;
             margin-bottom: 20px;
         }
 
-        /* Stats Bar */
-        .stats-bar {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+        .timer-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
             padding: 20px;
+            margin: 20px 0;
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .stat-item {
+        .timer-box {
             text-align: center;
         }
 
-        .stat-number {
-            font-size: 2em;
-            font-weight: 700;
-            color: white;
-            display: block;
-            margin-bottom: 5px;
+        .timer {
+            font-size: 3.5em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            min-width: 100px;
         }
 
-        .stat-label {
-            color: #a8a8b3;
+        .timer-label {
             font-size: 0.9em;
+            opacity: 0.8;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .wrong-stat .stat-number {
-            color: #ff4757;
-            text-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
-            animation: pulse 1s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Question Card */
-        .question-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        .progress-ring {
             position: relative;
-            overflow: hidden;
+            width: 80px;
+            height: 80px;
         }
 
-        .question-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite;
+        .progress-ring svg {
+            transform: rotate(-90deg);
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        .progress-ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 8;
         }
 
-        .question-number {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-bottom: 20px;
+        .progress-ring-fill {
+            fill: none;
+            stroke: #ffd700;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
         }
 
-        .question-text {
-            color: white;
-            font-size: 1.5em;
-            font-weight: 600;
-            margin-bottom: 30px;
-            line-height: 1.4;
-            text-align: center;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Input Field */
-        .input-group {
+        .video-container {
             position: relative;
-            margin-bottom: 25px;
-        }
-
-        .answer-input {
             width: 100%;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: white;
-            font-size: 1.2em;
-            font-weight: 500;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .answer-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .answer-input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #12c2e9;
-            box-shadow: 0 0 30px rgba(18, 194, 233, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 15px;
-            color: white;
-            font-size: 1.2em;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #000;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .submit-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Feedback Messages */
-        .feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1em;
-            animation: feedbackPop 0.5s ease;
-        }
-
-        @keyframes feedbackPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .feedback.correct {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
-        }
-
-        .feedback.wrong {
-            background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        /* Modal Popup */
-        .modal {
-            display: none;
-            position: fixed;
+        .video-container iframe {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
+            border: none;
         }
 
-        .modal.show {
+        .start-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
-            animation: fadeIn 0.5s ease;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .start-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: #ff0000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .start-overlay:hover .play-btn {
+            transform: scale(1.1);
+        }
+
+        .start-text {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .warning-box {
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .warning-icon {
+            font-size: 1.5em;
+        }
+
+        .warning-text {
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .redirect-message {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            padding: 40px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .modal-content {
-            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
-            padding: 50px;
-            border-radius: 30px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            border: 2px solid rgba(255, 71, 87, 0.5);
-            box-shadow: 0 0 100px rgba(255, 71, 87, 0.5);
-            animation: modalBounce 0.8s ease;
-        }
-
-        @keyframes modalBounce {
-            0% {
-                opacity: 0;
-                transform: scale(0.3);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .emoji-big {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: emojiSpin 1s ease;
-        }
-
-        @keyframes emojiSpin {
-            from { transform: rotate(0deg) scale(0); }
-            to { transform: rotate(360deg) scale(1); }
-        }
-
-        .modal h2 {
-            color: #ff4757;
+        .redirect-message h2 {
+            color: #ffd700;
             font-size: 2.5em;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 30px rgba(255, 71, 87, 0.5);
         }
 
-        .modal p {
-            color: #a8a8b3;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .countdown-display {
-            font-size: 6em;
-            font-weight: 800;
-            color: #ff4757;
-            text-shadow: 0 0 50px rgba(255, 71, 87, 0.8);
-            margin: 30px 0;
-            animation: countPulse 1s ease infinite;
-        }
-
-        @keyframes countPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-
-        /* Timer Bar */
-        .timer-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+        .check-icon {
+            font-size: 4em;
+            color: #4caf50;
             margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out;
         }
 
-        .timer-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
-            border-radius: 10px;
-            width: 100%;
-            animation: timerDecrease 10s linear;
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
-        @keyframes timerDecrease {
-            from { width: 100%; }
-            to { width: 0%; }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            .question-text { font-size: 1.2em; }
-            .stats-bar { 
-                flex-direction: row;
-                gap: 20px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .manual-link {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #ffd700;
+            color: #1e3c72;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .manual-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .skip-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: not-allowed;
+            opacity: 0.5;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .skip-btn.active {
+            background: #4caf50;
+            border-color: #4caf50;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .skip-btn.active:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .volume-hint {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .timer {
+                font-size: 2.5em;
             }
-            .stat-number { font-size: 1.5em; }
+            h1 {
+                font-size: 1.6em;
+            }
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Particles -->
-    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
-    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
-    <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
-    <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
-    <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
-    <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
-
-    <div class="main-container">
-        <!-- Logo Section -->
-        <div class="logo-section">
-            <div class="logo">🧠</div>
-            <h1>IQ Challenge</h1>
-            <p class="tagline">Buktikan Kamu Genius atau Bukan!</p>
-        </div>
-
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-number" id="questionNum">1</span>
-                <span class="stat-label">Soal</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="correctNum">0</span>
-                <span class="stat-label">Benar</span>
-            </div>
-            <div class="stat-item wrong-stat">
-                <span class="stat-number" id="wrongNum">0</span>
-                <span class="stat-label">Salah</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="scoreNum">0</span>
-                <span class="stat-label">Skor</span>
-            </div>
-        </div>
-
-        <!-- Question Card -->
-        <div class="question-card">
-            <span class="question-number">PERTANYAAN #<span id="qNumber">1</span></span>
+    <div class="container">
+        <div id="ad-section">
+            <h1>🎬 Tonton Iklan Ini</h1>
+            <p class="subtitle">Tonton video di bawah ini selama 1 menit untuk melanjutkan</p>
             
-            <div class="timer-bar">
-                <div class="timer-fill" id="timerFill"></div>
+            <div class="timer-container">
+                <div class="timer-box">
+                    <div class="timer" id="countdown">60</div>
+                    <div class="timer-label">Detik</div>
+                </div>
+                
+                <div class="progress-ring">
+                    <svg width="80" height="80">
+                        <circle class="progress-ring-bg" cx="40" cy="40" r="36"></circle>
+                        <circle class="progress-ring-fill" id="progress-circle" cx="40" cy="40" r="36"
+                            stroke-dasharray="226.19" stroke-dashoffset="0"></circle>
+                    </svg>
+                </div>
             </div>
 
-            <div class="question-text" id="questionText">
-                Loading question...
+            <div class="video-container">
+                <iframe 
+                    id="youtubePlayer"
+                    src="https://www.youtube.com/embed/rzpltLtgMe4?enablejsapi=1&controls=1&disablekb=0&fs=0&modestbranding=1&rel=0&playsinline=1"
+                    title="Iklan"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+                
+                <div class="start-overlay" id="startOverlay" onclick="startVideo()">
+                    <div class="play-btn">▶️</div>
+                    <div class="start-text">Klik untuk Mulai Menonton</div>
+                </div>
             </div>
 
-            <div class="input-group">
-                <input type="text" 
-                       class="answer-input" 
-                       id="answerInput" 
-                       placeholder="Ketik jawabanmu di sini..."
-                       autocomplete="off">
+            <div class="volume-hint">
+                🔊 Pastikan volume perangkat Anda menyala untuk mendengar suara video
             </div>
 
-            <button class="submit-btn" onclick="checkAnswer()">
-                SUBMIT JAWABAN
+            <div class="warning-box">
+                <span class="warning-icon">⏳</span>
+                <span class="warning-text">Tonton video sampai selesai! Jangan tutup halaman ini.</span>
+            </div>
+
+            <button class="skip-btn" id="skipBtn" disabled>
+                ⏭️ Lewati Iklan (60)
             </button>
-
-            <div id="feedback"></div>
         </div>
-    </div>
 
-    <!-- Modal Gagal -->
-    <div class="modal" id="failModal">
-        <div class="modal-content">
-            <div class="emoji-big">😈</div>
-            <h2>GAME OVER!</h2>
-            <p>
-                Kamu sudah salah 3 kali!<br>
-                IQ kamu ternyata di bawah rata-rata 😂<br>
-                Bersiaplah untuk hukumanmu...
-            </p>
-            <div class="countdown-display" id="countdown">3</div>
-            <p style="color: #ff4757; font-weight: 600;">
-                ⚠️ PERINGATAN: Konten Dewasa Akan Terbuka ⚠️
-            </p>
+        <div id="redirect-section" class="redirect-message">
+            <div class="check-icon">✅</div>
+            <h2>Terima Kasih!</h2>
+            <p>Anda telah menonton iklan. Mengarahkan ke halaman tujuan...</p>
+            <div class="spinner"></div>
+            <a href="https://token-free-ivory.vercel.app/" class="manual-link">
+                Klik di sini jika tidak otomatis
+            </a>
         </div>
     </div>
 
     <script>
-        let wrongAttempts = 0;
-        let correctAttempts = 0;
-        let questionNumber = 0;
-        let score = 0;
-        let currentQuestion = {};
+        let timeLeft = 60;
+        let timerStarted = false;
+        let timerInterval;
+        const countdownElement = document.getElementById('countdown');
+        const progressCircle = document.getElementById('progress-circle');
+        const skipBtn = document.getElementById('skipBtn');
+        const adSection = document.getElementById('ad-section');
+        const redirectSection = document.getElementById('redirect-section');
+        const startOverlay = document.getElementById('startOverlay');
+        const youtubePlayer = document.getElementById('youtubePlayer');
+        
+        // Circle progress setup
+        const radius = 36;
+        const circumference = 2 * Math.PI * radius;
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = 0;
 
-        // Question Generator
-        function generateQuestion() {
-            const types = [
-                // Matematika Dasar
-                () => {
-                    const a = Math.floor(Math.random() * 50) + 10;
-                    const b = Math.floor(Math.random() * 30) + 10;
-                    const ops = [
-                        {symbol: '+', calc: (x,y) => x + y},
-                        {symbol: '-', calc: (x,y) => x - y},
-                        {symbol: '×', calc: (x,y) => x * y}
-                    ];
-                    const op = ops[Math.floor(Math.random() * ops.length)];
-                    return {
-                        q: `${a} ${op.symbol} ${b} = ?`,
-                        a: op.calc(a, b).toString()
-                    };
-                },
-                
-                // Persamaan Sederhana
-                () => {
-                    const result = Math.floor(Math.random() * 20) + 5;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const a = result + b;
-                    return {
-                        q: `Jika X + ${b} = ${a}, berapa nilai X?`,
-                        a: result.toString()
-                    };
-                },
-                
-                // Logika Angka
-                () => {
-                    const start = Math.floor(Math.random() * 10) + 1;
-                    const step = Math.floor(Math.random() * 5) + 2;
-                    const seq = [start, start+step, start+(step*2), start+(step*3)];
-                    return {
-                        q: `Lanjutkan deret: ${seq.slice(0,3).join(', ')}, ...?`,
-                        a: seq[3].toString()
-                    };
-                },
-                
-                // Kuadrat
-                () => {
-                    const n = Math.floor(Math.random() * 15) + 5;
-                    return {
-                        q: `Berapa ${n}²?`,
-                        a: (n * n).toString()
-                    };
-                },
-                
-                // Persen
-                () => {
-                    const total = [100, 200, 500, 1000][Math.floor(Math.random() * 4)];
-                    const percent = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
-                    return {
-                        q: `Berapa ${percent}% dari ${total}?`,
-                        a: (total * percent / 100).toString()
-                    };
-                },
-                
-                // Word Problem
-                () => {
-                    const apples = Math.floor(Math.random() * 30) + 10;
-                    const given = Math.floor(Math.random() * 10) + 1;
-                    return {
-                        q: `Kamu punya ${apples} apel, memberikan ${given} ke teman. Sisa?`,
-                        a: (apples - given).toString()
-                    };
-                },
-                
-                // Faktorial Sederhana
-                () => {
-                    const n = Math.floor(Math.random() * 4) + 3;
-                    let result = 1;
-                    for(let i = 1; i <= n; i++) result *= i;
-                    return {
-                        q: `Berapa ${n}! (faktorial)?`,
-                        a: result.toString()
-                    };
-                },
-                
-                // Geometri
-                () => {
-                    const sisi = Math.floor(Math.random() * 10) + 3;
-                    return {
-                        q: `Luas persegi dengan sisi ${sisi} cm?`,
-                        a: (sisi * sisi).toString()
-                    };
-                }
-            ];
-            
-            const randomType = types[Math.floor(Math.random() * types.length)];
-            return randomType();
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
         }
 
-        // New Question
-        function newQuestion() {
-            questionNumber++;
-            currentQuestion = generateQuestion();
+        // Start video and timer
+        function startVideo() {
+            if (timerStarted) return;
+            timerStarted = true;
             
-            document.getElementById('questionNum').textContent = questionNumber;
-            document.getElementById('qNumber').textContent = questionNumber;
-            document.getElementById('questionText').textContent = currentQuestion.q;
-            document.getElementById('answerInput').value = '';
-            document.getElementById('feedback').innerHTML = '';
+            // Hide overlay
+            startOverlay.classList.add('hidden');
             
-            // Reset timer animation
-            const timer = document.getElementById('timerFill');
-            timer.style.animation = 'none';
-            setTimeout(() => {
-                timer.style.animation = 'timerDecrease 10s linear';
-            }, 10);
-        }
-
-        // Check Answer
-        function checkAnswer() {
-            const userAnswer = document.getElementById('answerInput').value.trim();
-            const feedback = document.getElementById('feedback');
-            
-            if (userAnswer === '') {
-                feedback.innerHTML = '<div class="feedback wrong">⚠️ Tulis jawabanmu dulu!</div>';
-                return;
+            // Reload iframe with autoplay unmuted
+            const currentSrc = youtubePlayer.src;
+            if (!currentSrc.includes('autoplay=1')) {
+                youtubePlayer.src = currentSrc + '&autoplay=1';
             }
             
-            if (userAnswer === currentQuestion.a) {
-                correctAttempts++;
-                score += 10;
-                document.getElementById('correctNum').textContent = correctAttempts;
-                document.getElementById('scoreNum').textContent = score;
-                feedback.innerHTML = '<div class="feedback correct">✅ BENAR! Kamu Pintar!</div>';
-                
-                setTimeout(newQuestion, 1500);
-            } else {
-                wrongAttempts++;
-                document.getElementById('wrongNum').textContent = wrongAttempts;
-                feedback.innerHTML = `<div class="feedback wrong">❌ SALAH! Jawaban: ${currentQuestion.a}</div>`;
-                
-                if (wrongAttempts >= 3) {
-                    setTimeout(showFailModal, 1000);
-                } else {
-                    setTimeout(newQuestion, 2000);
-                }
-            }
+            // Start timer
+            startTimer();
         }
 
-        // Show Fail Modal & Redirect
-        function showFailModal() {
-            document.getElementById('failModal').classList.add('show');
-            
-            let count = 3;
-            const countdownEl = document.getElementById('countdown');
-            
-            const timer = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownEl.textContent = count;
-                } else {
-                    countdownEl.textContent = '💀';
-                    clearInterval(timer);
-                    
-                    // REDIRECT ke Website Target
-                    setTimeout(() => {
-                        window.location.href = 'https://www.pornhub.com';
-                    }, 500);
+        // Countdown timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                countdownElement.textContent = timeLeft;
+                skipBtn.textContent = `⏭️ Lewati Iklan (${timeLeft})`;
+                
+                // Update circular progress
+                const percent = ((60 - timeLeft) / 60) * 100;
+                setProgress(percent);
+                
+                // Pulse animation
+                countdownElement.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    countdownElement.style.transform = 'scale(1)';
+                }, 200);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    enableSkip();
                 }
             }, 1000);
         }
 
-        // Enter key support
-        document.getElementById('answerInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAnswer();
-            }
-        });
+        // Enable skip button
+        function enableSkip() {
+            skipBtn.disabled = false;
+            skipBtn.classList.add('active');
+            skipBtn.textContent = '⏭️ Lewati Iklan & Lanjutkan';
+            skipBtn.onclick = showRedirect;
+            
+            // Auto redirect after 3 seconds if they don't click
+            setTimeout(() => {
+                if (adSection.style.display !== 'none') {
+                    showRedirect();
+                }
+            }, 3000);
+        }
 
-        // Initialize
-        window.onload = function() {
-            newQuestion();
-        };
+        // Show redirect section
+        function showRedirect() {
+            // Pause video
+            youtubePlayer.src = youtubePlayer.src.replace('&autoplay=1', '');
+            
+            adSection.style.display = 'none';
+            redirectSection.style.display = 'block';
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'https://token-free-ivory.vercel.app/';
+            }, 2000);
+        }
+
+        // Auto-start attempt (may work if user already interacted with page)
+        window.addEventListener('load', () => {
+            // Some browsers allow autoplay with sound if user previously interacted
+            // But most require click, so we show the overlay as fallback
+        });
     </script>
 </body>
 </html>

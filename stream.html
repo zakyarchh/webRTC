@@ -3,904 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaky - Live Stream</title>
-    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/sos8c4.jpg">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --primary: #6B8E9F;
-            --primary-light: #8FB4C4;
-            --primary-dark: #4A6B7C;
-            --secondary: #A8D5E5;
-            --accent: #F4A4B4;
-            --accent-light: #FFD4DC;
-            --bg-main: #F0F7FA;
-            --bg-card: #FFFFFF;
-            --bg-dark: #1A2530;
-            --text-primary: #3A5565;
-            --text-secondary: #6B8E9F;
-            --text-light: #94B4C4;
-            --shadow-soft: 0 8px 32px rgba(107, 142, 159, 0.15);
-            --shadow-hover: 0 12px 48px rgba(107, 142, 159, 0.25);
-            --gradient-primary: linear-gradient(135deg, #6B8E9F 0%, #8FB4C4 100%);
-        }
-        
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: var(--bg-main);
-            min-height: 100vh;
-            color: var(--text-primary);
-        }
-        
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(107, 142, 159, 0.1);
-        }
-        
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        
-        .nav-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-        
-        .nav-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: linear-gradient(135deg, #EF4444, #F87171);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            animation: pulse-live 2s infinite;
-        }
-        
-        .live-indicator.offline {
-            background: linear-gradient(135deg, #6B7280, #9CA3AF);
-            animation: none;
-        }
-        
-        @keyframes pulse-live {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-        }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        .viewer-count {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-        
-        /* Main Layout */
-        .main-container {
-            padding-top: 60px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        @media (min-width: 1024px) {
-            .main-container {
-                flex-direction: row;
-            }
-        }
-        
-        /* Video Section */
-        .video-section {
-            flex: 1;
-            background: var(--bg-dark);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-        }
-        
-        @media (min-width: 1024px) {
-            .video-section {
-                min-height: calc(100vh - 60px);
-            }
-        }
-        
-        #streamVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: #000;
-            display: none;
-        }
-        
-        .video-placeholder {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            padding: 40px;
-        }
-        
-        .video-placeholder-icon {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-        
-        .video-placeholder h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        
-        .video-placeholder p {
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-        
-        /* Stream Controls */
-        .stream-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            padding: 12px 20px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .video-section:hover .stream-controls {
-            opacity: 1;
-        }
-        
-        .control-btn {
-            width: 44px;
-            height: 44px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.1);
-        }
-        
-        .control-btn.active {
-            background: var(--primary);
-        }
-        
-        /* Chat Section */
-        .chat-section {
-            width: 100%;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-card);
-            border-top: 1px solid rgba(107, 142, 159, 0.1);
-        }
-        
-        @media (min-width: 1024px) {
-            .chat-section {
-                width: 380px;
-                height: calc(100vh - 60px);
-                border-top: none;
-                border-left: 1px solid rgba(107, 142, 159, 0.1);
-            }
-        }
-        
-        .chat-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(107, 142, 159, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .chat-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .chat-badge {
-            background: var(--secondary);
-            color: var(--primary-dark);
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        
-        /* Chat Messages */
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .chat-messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(107, 142, 159, 0.2);
-            border-radius: 10px;
-        }
-        
-        .message-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            background: var(--bg-main);
-            border-radius: 20px;
-            border-bottom-left-radius: 6px;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .message-bubble.own {
-            align-self: flex-end;
-            background: var(--gradient-primary);
-            color: white;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 6px;
-        }
-        
-        .message-bubble.system {
-            align-self: center;
-            max-width: 100%;
-            background: rgba(107, 142, 159, 0.1);
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            border-radius: 12px;
-        }
-        
-        .message-name {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        
-        .message-bubble.own .message-name {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .message-text {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            word-break: break-word;
-        }
-        
-        .message-time {
-            font-size: 0.7rem;
-            color: var(--text-light);
-            margin-top: 4px;
-            text-align: right;
-        }
-        
-        .message-bubble.own .message-time {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        /* Chat Input */
-        .chat-input-container {
-            padding: 16px;
-            border-top: 1px solid rgba(107, 142, 159, 0.1);
-            background: var(--bg-card);
-        }
-        
-        .chat-input-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 14px 18px;
-            border: 2px solid rgba(107, 142, 159, 0.15);
-            border-radius: 24px;
-            font-size: 0.95rem;
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-primary);
-            background: var(--bg-main);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        
-        .chat-input:focus {
-            border-color: var(--primary);
-            background: var(--bg-card);
-        }
-        
-        .chat-input::placeholder {
-            color: var(--text-light);
-        }
-        
-        .chat-input:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .send-btn {
-            width: 48px;
-            height: 48px;
-            border: none;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(107, 142, 159, 0.3);
-        }
-        
-        .send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(107, 142, 159, 0.4);
-        }
-        
-        .send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Slow Mode / Muted Notice */
-        .chat-notice {
-            padding: 10px 16px;
-            background: rgba(244, 164, 180, 0.15);
-            color: #C4748A;
-            font-size: 0.85rem;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        /* Stream Ended Overlay */
-        .stream-ended-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(26, 37, 48, 0.95);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .stream-ended-content {
-            text-align: center;
-            color: white;
-            padding: 40px;
-        }
-        
-        .stream-ended-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .stream-ended-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-        
-        .stream-ended-text {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 24px;
-        }
-        
-        .btn-home {
-            display: inline-block;
-            padding: 14px 32px;
-            background: var(--gradient-primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 24px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-home:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(107, 142, 159, 0.4);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .navbar {
-                padding: 0 12px;
-            }
-            
-            .nav-title {
-                font-size: 1.1rem;
-            }
-            
-            .viewer-count {
-                display: none;
-            }
-            
-            .chat-section {
-                height: 350px;
-            }
-        }
-    </style>
+    <title>IKAZ Live - Stream</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="index.html" class="nav-brand">
-            <img src="https://files.catbox.moe/sos8c4.jpg" alt="Zaky" class="nav-logo">
-            <span class="nav-title">Zaky</span>
-        </a>
-        
-        <div class="live-indicator" id="liveIndicator">
-            <span class="live-dot"></span>
-            <span id="liveText">LIVE</span>
-        </div>
-        
-        <div class="viewer-count" id="viewerCount">
-            👥 <span id="viewerNum">0</span> viewers
-        </div>
-    </nav>
-    
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Video Section -->
-        <section class="video-section" id="videoSection">
-            <video id="streamVideo" autoplay playsinline></video>
-            
-            <div class="video-placeholder" id="videoPlaceholder">
-                <div class="video-placeholder-icon">📺</div>
-                <h3>Menunggu Stream...</h3>
-                <p>Stream akan segera dimulai</p>
+    <div class="container">
+        <!-- Token Validation -->
+        <div id="tokenValidation" class="token-validation glass-card fade-in">
+            <div class="validation-header">
+                <span class="validation-icon">—_—</span>
+                <h2>Validasi Akses</h2>
             </div>
-            
-            <div class="stream-controls">
-                <button class="control-btn" id="muteBtn" title="Mute/Unmute">
-                    🔊
+            <form id="validationForm" class="validation-form">
+                <div class="input-group">
+                    <label for="tokenInput">Token Akses</label>
+                    <input type="text" id="tokenInput" class="glass-input" placeholder="Masukkan token..." required>
+                </div>
+                <div class="input-group">
+                    <label for="viewerName">Nama Kamu</label>
+                    <input type="text" id="viewerName" class="glass-input" placeholder="Nama untuk chat..." required maxlength="30">
+                </div>
+                <button type="submit" class="btn-primary btn-full">
+                    👊 Tonton Live
                 </button>
-                <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
-                    ⛶
-                </button>
-            </div>
-        </section>
-        
-        <!-- Chat Section -->
-        <section class="chat-section">
-            <div class="chat-header">
-                <div class="chat-title">
-                    💬 Live Chat
-                    <span class="chat-badge" id="chatViewerCount">0 online</span>
+                <p id="validationError" class="error-text hidden"></p>
+            </form>
+            <a href="index.html" class="back-link">← Kembali ke Home</a>
+        </div>
+
+        <!-- Stream Player -->
+        <div id="streamContainer" class="stream-container hidden">
+            <header class="stream-header glass-header fade-in">
+                <div class="stream-info">
+                    <span class="live-badge heartbeat">👊😝 LIVE</span>
+                    <h1 id="streamTitle">IKAZ Live</h1>
                 </div>
-            </div>
-            
-            <div class="chat-notice" id="chatNotice" style="display: none;"></div>
-            
-            <div class="chat-messages" id="chatMessages">
-                <div class="message-bubble system">
-                    Selamat datang di live chat! 👋
+                <div class="stream-actions">
+                    <span id="connectionStatus" class="connection-status">Menghubungkan...</span>
+                    <button class="btn-secondary" onclick="leaveStream()">🚷 Keluar</button>
                 </div>
-            </div>
-            
-            <div class="chat-input-container">
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" id="chatInput" 
-                           placeholder="Ketik pesan..." maxlength="200">
-                    <button class="send-btn" id="sendBtn">➤</button>
+            </header>
+
+            <main class="stream-main">
+                <!-- Video Player -->
+                <div class="video-container glass-card">
+                    <video id="remoteVideo" autoplay playsinline></video>
+                    <div id="videoOverlay" class="video-overlay">
+                        <div class="loading-spinner"></div>
+                        <p>Menghubungkan ke stream...</p>
+                    </div>
+                    <div id="videoError" class="video-error hidden shake-bottom">
+                        <span class="error-icon">⚠️</span>
+                        <p>Gagal terhubung ke stream</p>
+                        <button class="btn-primary" onclick="reconnect()">🔄 Coba Lagi</button>
+                    </div>
                 </div>
+
+                <!-- Complaint Form -->
+                <div class="complaint-container glass-card fade-in">
+                    <div class="complaint-header">
+                        <h3>📩 Kirim Pengaduan</h3>
+                    </div>
+                    <div class="complaint-form">
+                        <textarea id="complaintMessage" class="glass-input" placeholder="Tulis pengaduan atau pertanyaan..." rows="3" maxlength="500"></textarea>
+                        <button class="btn-primary" onclick="sendComplaint()">
+                            📤 Kirim
+                        </button>
+                    </div>
+                    <div id="complaintList" class="my-complaints">
+                        <h4>Pengaduan Terkirim</h4>
+                        <div id="myComplaintsList"></div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Notifications Panel -->
+            <div class="notifications-panel glass-card fade-in">
+                <div class="notif-header">
+                    <h3>🔔 Notifikasi</h3>
+                </div>
+                <div id="notificationsList" class="notif-list"></div>
             </div>
-        </section>
-    </main>
-    
-    <!-- Stream Ended Overlay -->
-    <div class="stream-ended-overlay" id="streamEndedOverlay">
-        <div class="stream-ended-content">
-            <div class="stream-ended-icon">📺</div>
-            <h2 class="stream-ended-title">Stream Berakhir</h2>
-            <p class="stream-ended-text">Terima kasih sudah menonton!</p>
-            <a href="index.html" class="btn-home">Kembali ke Beranda</a>
+        </div>
+
+        <!-- Stream Offline -->
+        <div id="streamOffline" class="stream-offline glass-card hidden fade-in">
+            <div class="offline-content">
+                <span class="offline-icon">💭</span>
+                <h2>Live Streaming Berakhir</h2>
+                <p>Terima kasih sudah menonton!</p>
+                <a href="index.html" class="btn-primary">← Kembali ke Home</a>
+            </div>
         </div>
     </div>
-    
+
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
         import { 
             getFirestore, 
             doc, 
-            collection,
             getDoc, 
-            getDocs,
-            setDoc, 
-            addDoc,
+            setDoc,
             updateDoc,
             deleteDoc,
-            onSnapshot, 
-            query,
-            where,
+            addDoc,
+            collection, 
+            query, 
+            where, 
+            getDocs,
+            onSnapshot,
             orderBy,
             serverTimestamp,
-            increment
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        
+            Timestamp
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
         const firebaseConfig = {
-            apiKey: "AIzaSyDhRMtGKUs0ih1wDuR3FpzSyYJnouQWat8",
-            authDomain: "livehshshs.firebaseapp.com",
-            projectId: "livehshshs",
-            storageBucket: "livehshshs.firebasestorage.app",
-            messagingSenderId: "363301327113",
-            appId: "1:363301327113:web:05ee9e34cd7eb71acac3d8",
-            measurementId: "G-0VVRS3GZY4"
+            apiKey: "AIzaSyABI8SWMoN_4YAtZa5hARAfYcMZ0jHfz1s",
+            authDomain: "ikazlive.firebaseapp.com",
+            projectId: "ikazlive",
+            storageBucket: "ikazlive.firebasestorage.app",
+            messagingSenderId: "1026492663745",
+            appId: "1:1026492663745:web:41af1ff5662e9411481140",
+            measurementId: "G-Y7SW5E6P1V"
         };
-        
+
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const db = getFirestore(app);
-        
-        // Get viewer info from session
-        const viewerToken = sessionStorage.getItem('viewerToken');
-        const viewerName = sessionStorage.getItem('viewerName');
-        const viewerId = sessionStorage.getItem('viewerId');
-        
-        // Redirect if no session
-        if (!viewerToken || !viewerName || !viewerId) {
-            window.location.href = 'index.html';
-        }
-        
-        // DOM Elements
-        const streamVideo = document.getElementById('streamVideo');
-        const videoPlaceholder = document.getElementById('videoPlaceholder');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const liveIndicator = document.getElementById('liveIndicator');
-        const liveText = document.getElementById('liveText');
-        const viewerNum = document.getElementById('viewerNum');
-        const chatViewerCount = document.getElementById('chatViewerCount');
-        const muteBtn = document.getElementById('muteBtn');
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        const streamEndedOverlay = document.getElementById('streamEndedOverlay');
-        const chatNotice = document.getElementById('chatNotice');
-        
-        let peerConnection = null;
-        let isMuted = false;
-        let lastMessageTime = 0;
-        let slowModeDelay = 0;
-        let isUserMuted = false;
-        
-        // ICE Servers for WebRTC
-        const iceServers = {
+
+        // WebRTC Configuration
+        const rtcConfig = {
             iceServers: [
                 { urls: 'stun:stun.l.google.com:19302' },
-                { urls: 'stun:stun1.l.google.com:19302' },
-                { urls: 'stun:stun2.l.google.com:19302' }
+                { urls: 'stun:stun1.l.google.com:19302' }
             ]
         };
-        
-        // Monitor presence
-        const presenceRef = collection(db, 'presence');
-        const presenceQuery = query(presenceRef);
-        const unsubscribePresence = onSnapshot(presenceQuery, (snapshot) => {
-            const count = snapshot.size;
-            viewerNum.textContent = count;
-            chatViewerCount.textContent = `${count} online`;
-        });
-        
-        // Monitor live status
-        const liveStatusRef = doc(db, 'liveStatus', 'status');
-        const unsubscribeLiveStatus = onSnapshot(liveStatusRef, (snapshot) => {
-            const data = snapshot.data();
-            
-            if (!data || !data.isLive) {
-                liveIndicator.classList.add('offline');
-                liveText.textContent = 'OFFLINE';
-                videoPlaceholder.innerHTML = `
-                    <div class="video-placeholder-icon">📺</div>
-                    <h3>Stream Offline</h3>
-                    <p>Menunggu host memulai stream...</p>
-                `;
-                videoPlaceholder.style.display = 'block';
-                streamVideo.style.display = 'none';
-                
-                if (data?.endedAt) {
-                    streamEndedOverlay.style.display = 'flex';
-                }
-            } else {
-                liveIndicator.classList.remove('offline');
-                liveText.textContent = 'LIVE';
-                connectToStream();
+
+        let peerConnection = null;
+        let viewerId = null;
+        let viewerName = '';
+        let complaintTimers = [];
+        let unsubscribers = [];
+
+        // Check stored token
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedToken = sessionStorage.getItem('accessToken');
+            if (storedToken) {
+                document.getElementById('tokenInput').value = storedToken;
             }
         });
-        
-        // Monitor settings
-        const settingsRef = doc(db, 'settings', 'config');
-        const unsubscribeSettings = onSnapshot(settingsRef, (snapshot) => {
-            const settings = snapshot.data() || {};
-            slowModeDelay = settings.slowMode || 0;
+
+        // Validation form submit
+        document.getElementById('validationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            if (slowModeDelay > 0) {
-                chatNotice.textContent = `⏱️ Slow mode aktif: ${slowModeDelay} detik`;
-                chatNotice.style.display = 'block';
-            } else {
-                chatNotice.style.display = 'none';
-            }
-        });
-        
-        // Monitor if user is muted/kicked
-        const myViewerRef = doc(db, 'viewers', viewerId);
-        const unsubscribeViewer = onSnapshot(myViewerRef, (snapshot) => {
-            if (!snapshot.exists()) {
-                // Kicked
-                alert('Anda telah dikeluarkan dari stream');
-                window.location.href = 'index.html';
+            const token = document.getElementById('tokenInput').value.trim();
+            const name = document.getElementById('viewerName').value.trim();
+            const errorEl = document.getElementById('validationError');
+            
+            if (!token || !name) {
+                showValidationError('Lengkapi semua field');
                 return;
             }
             
-            const data = snapshot.data();
-            isUserMuted = data.muted || false;
-            
-            if (isUserMuted) {
-                chatInput.disabled = true;
-                chatInput.placeholder = 'Anda di-mute oleh admin';
-                sendBtn.disabled = true;
-            } else {
-                chatInput.disabled = false;
-                chatInput.placeholder = 'Ketik pesan...';
-                sendBtn.disabled = false;
-            }
-        });
-        
-        // WebRTC Connection
-        async function connectToStream() {
             try {
-                peerConnection = new RTCPeerConnection(iceServers);
+                // Validate token
+                const tokensRef = collection(db, 'tokens');
+                const q = query(tokensRef, where('token', '==', token));
+                const snapshot = await getDocs(q);
                 
-                peerConnection.ontrack = (event) => {
-                    streamVideo.srcObject = event.streams[0];
-                    streamVideo.style.display = 'block';
-                    videoPlaceholder.style.display = 'none';
-                };
+                if (snapshot.empty) {
+                    showValidationError('Token tidak valid');
+                    return;
+                }
                 
-                peerConnection.onicecandidate = async (event) => {
-                    if (event.candidate) {
-                        await addDoc(collection(db, 'webrtc', 'viewerCandidates', viewerId), {
-                            candidate: event.candidate.toJSON()
-                        });
-                    }
-                };
+                const tokenData = snapshot.docs[0].data();
+                const now = Timestamp.now();
                 
-                // Listen for offer from admin
-                const offerRef = doc(db, 'webrtc', 'offer', 'current');
-                const unsubscribeOffer = onSnapshot(offerRef, async (snapshot) => {
-                    const offer = snapshot.data();
-                    if (offer && peerConnection.signalingState === 'stable') {
-                        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-                        
-                        const answer = await peerConnection.createAnswer();
-                        await peerConnection.setLocalDescription(answer);
-                        
-                        await setDoc(doc(db, 'webrtc', 'answers', viewerId), {
-                            type: answer.type,
-                            sdp: answer.sdp
-                        });
-                    }
-                });
+                if (tokenData.expiresAt && tokenData.expiresAt.toMillis() < now.toMillis()) {
+                    showValidationError('Token sudah kadaluarsa');
+                    return;
+                }
                 
-                // Listen for ICE candidates from admin
-                const adminCandidatesRef = collection(db, 'webrtc', 'adminCandidates');
-                const unsubscribeAdminCandidates = onSnapshot(adminCandidatesRef, (snapshot) => {
-                    snapshot.docChanges().forEach(async (change) => {
-                        if (change.type === 'added') {
-                            const candidate = change.doc.data().candidate;
-                            if (candidate && peerConnection) {
-                                await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-                            }
-                        }
-                    });
-                });
+                // Check if live is online
+                const liveRef = doc(db, 'liveStream', 'current');
+                const liveSnap = await getDoc(liveRef);
+                
+                if (!liveSnap.exists() || liveSnap.data().status !== 'online') {
+                    showValidationError('Stream sedang tidak aktif');
+                    return;
+                }
+                
+                // Store token
+                sessionStorage.setItem('accessToken', token);
+                viewerName = name;
+                
+                // Start watching
+                startWatching(liveSnap.data());
                 
             } catch (error) {
-                console.error('WebRTC Error:', error);
+                console.error('Validation error:', error);
+                showValidationError('Terjadi kesalahan');
             }
+        });
+
+        function showValidationError(message) {
+            const errorEl = document.getElementById('validationError');
+            const form = document.getElementById('tokenValidation');
+            
+            errorEl.textContent = message;
+            errorEl.classList.remove('hidden');
+            
+            form.classList.add('shake-horizontal');
+            setTimeout(() => {
+                form.classList.remove('shake-horizontal');
+            }, 500);
         }
-        
-        // Chat functionality
-        const chatRef = collection(db, 'chat');
-        const chatQuery = query(chatRef, orderBy('timestamp', 'asc'));
-        const unsubscribeChat = onSnapshot(chatQuery, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'added') {
-                    const message = change.doc.data();
-                    appendMessage(message);
+
+        // Start watching stream
+        async function startWatching(liveData) {
+            // Hide validation, show stream
+            document.getElementById('tokenValidation').classList.add('hidden');
+            document.getElementById('streamContainer').classList.remove('hidden');
+            document.getElementById('streamTitle').textContent = liveData.title || 'IKAZ Live';
+            
+            // Generate viewer ID
+            viewerId = 'viewer_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            // Register as viewer
+            await setDoc(doc(db, 'viewers', viewerId), {
+                name: viewerName,
+                status: 'pending',
+                createdAt: serverTimestamp()
+            });
+            
+            // Listen for offer from admin
+            listenForOffer();
+            
+            // Listen to stream status
+            listenToStreamStatus();
+            
+            // Listen to notifications
+            listenToNotifications();
+            
+            // Load my complaints
+            loadMyComplaints();
+        }
+
+        // Listen for offer from admin
+        function listenForOffer() {
+            const viewerRef = doc(db, 'viewers', viewerId);
+            
+            const unsubscribe = onSnapshot(viewerRef, async (docSnap) => {
+                if (!docSnap.exists()) {
+                    // Viewer was disconnected by admin
+                    leaveStream();
+                    return;
+                }
+                
+                const data = docSnap.data();
+                
+                if (data.offer && !peerConnection) {
+                    await handleOffer(data.offer);
                 }
             });
-        });
-        
-        function appendMessage(message) {
-            const div = document.createElement('div');
-            const isOwn = message.viewerId === viewerId;
-            const isSystem = message.type === 'system';
             
-            if (isSystem) {
-                div.className = 'message-bubble system';
-                div.textContent = message.text;
-            } else {
-                div.className = `message-bubble ${isOwn ? 'own' : ''}`;
+            unsubscribers.push(unsubscribe);
+        }
+
+        // Handle incoming offer
+        async function handleOffer(offer) {
+            try {
+                updateConnectionStatus('Menerima offer...');
                 
-                const time = message.timestamp?.toDate ? 
-                    message.timestamp.toDate().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : '';
+                peerConnection = new RTCPeerConnection(rtcConfig);
                 
-                div.innerHTML = `
-                    ${!isOwn ? `<div class="message-name">${escapeHtml(message.name)}</div>` : ''}
-                    <div class="message-text">${escapeHtml(message.text)}</div>
-                    <div class="message-time">${time}</div>
-                `;
+                // Handle incoming track
+                peerConnection.ontrack = (event) => {
+                    console.log('Track received:', event.streams);
+                    const video = document.getElementById('remoteVideo');
+                    video.srcObject = event.streams[0];
+                    
+                    // Hide overlay, show video
+                    document.getElementById('videoOverlay').classList.add('hidden');
+                    video.classList.add('fade-in-fwd');
+                    updateConnectionStatus('Terhubung ✓');
+                };
+                
+                // ICE candidate handling
+                peerConnection.onicecandidate = async (event) => {
+                    if (event.candidate) {
+                        await addDoc(collection(db, 'viewers', viewerId, 'viewerCandidates'), {
+                            candidate: event.candidate.toJSON(),
+                            createdAt: serverTimestamp()
+                        });
+                    }
+                };
+                
+                // Connection state change
+                peerConnection.onconnectionstatechange = () => {
+                    const state = peerConnection.connectionState;
+                    console.log('Connection state:', state);
+                    
+                    if (state === 'connected') {
+                        updateConnectionStatus('Terhubung ✓');
+                    } else if (state === 'disconnected' || state === 'failed') {
+                        showVideoError();
+                    }
+                };
+                
+                // ICE connection state
+                peerConnection.oniceconnectionstatechange = () => {
+                    console.log('ICE state:', peerConnection.iceConnectionState);
+                };
+                
+                // Set remote description (offer)
+                updateConnectionStatus('Memproses offer...');
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+                
+                // Listen for admin ICE candidates
+                const candidatesUnsub = onSnapshot(
+                    collection(db, 'viewers', viewerId, 'adminCandidates'),
+                    (snapshot) => {
+                        snapshot.docChanges().forEach(async (change) => {
+                            if (change.type === 'added') {
+                                const data = change.doc.data();
+                                try {
+                                    await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                                } catch (e) {
+                                    console.error('Error adding ICE candidate:', e);
+                                }
+                            }
+                        });
+                    }
+                );
+                unsubscribers.push(candidatesUnsub);
+                
+                // Create answer
+                updateConnectionStatus('Membuat answer...');
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+                
+                // Save answer to Firestore
+                await updateDoc(doc(db, 'viewers', viewerId), {
+                    answer: {
+                        type: answer.type,
+                        sdp: answer.sdp
+                    },
+                    status: 'answered'
+                });
+                
+                updateConnectionStatus('Menunggu koneksi...');
+                
+            } catch (error) {
+                console.error('Error handling offer:', error);
+                showVideoError();
+            }
+        }
+
+        function updateConnectionStatus(text) {
+            document.getElementById('connectionStatus').textContent = text;
+        }
+
+        function showVideoError() {
+            document.getElementById('videoOverlay').classList.add('hidden');
+            document.getElementById('videoError').classList.remove('hidden');
+        }
+
+        // Reconnect
+        window.reconnect = async function() {
+            document.getElementById('videoError').classList.add('hidden');
+            document.getElementById('videoOverlay').classList.remove('hidden');
+            
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
             }
             
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        // Send message
-        async function sendMessage() {
-            const text = chatInput.value.trim();
+            // Re-register as viewer
+            await updateDoc(doc(db, 'viewers', viewerId), {
+                status: 'pending',
+                offer: null,
+                answer: null
+            });
+        };
+
+        // Listen to stream status
+        function listenToStreamStatus() {
+            const liveRef = doc(db, 'liveStream', 'current');
             
-            if (!text || isUserMuted) return;
+            const unsubscribe = onSnapshot(liveRef, (docSnap) => {
+                if (!docSnap.exists() || docSnap.data().status !== 'online') {
+                    // Stream ended
+                    showStreamEnded();
+                }
+            });
             
-            // Check slow mode
-            const now = Date.now();
-            if (slowModeDelay > 0 && (now - lastMessageTime) < slowModeDelay * 1000) {
-                const remaining = Math.ceil((slowModeDelay * 1000 - (now - lastMessageTime)) / 1000);
-                alert(`Tunggu ${remaining} detik lagi`);
+            unsubscribers.push(unsubscribe);
+        }
+
+        function showStreamEnded() {
+            document.getElementById('streamContainer').classList.add('hidden');
+            document.getElementById('streamOffline').classList.remove('hidden');
+            
+            // Cleanup
+            cleanup();
+        }
+
+        // Leave stream
+        window.leaveStream = async function() {
+            try {
+                if (viewerId) {
+                    await deleteDoc(doc(db, 'viewers', viewerId));
+                }
+            } catch (error) {
+                console.error('Error leaving stream:', error);
+            }
+            
+            cleanup();
+            window.location.href = 'index.html';
+        };
+
+        // Cleanup
+        function cleanup() {
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+            
+            unsubscribers.forEach(unsub => unsub());
+            unsubscribers = [];
+            
+            complaintTimers.forEach(timer => clearTimeout(timer));
+            complaintTimers = [];
+        }
+
+        // Listen to notifications
+        function listenToNotifications() {
+            const notifRef = collection(db, 'notifications');
+            const q = query(notifRef, orderBy('createdAt', 'desc'));
+            
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const notifList = document.getElementById('notificationsList');
+                notifList.innerHTML = '';
+                
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const time = data.createdAt?.toDate?.() || new Date();
+                    const timeStr = time.toLocaleTimeString('id-ID');
+                    
+                    const notifItem = document.createElement('div');
+                    notifItem.className = 'notif-item glass-bubble slide-in-right';
+                    notifItem.innerHTML = `
+                        <span class="notif-icon">📢</span>
+                        <p>${data.message}</p>
+                        <span class="notif-time">${timeStr}</span>
+                    `;
+                    notifList.appendChild(notifItem);
+                });
+            });
+            
+            unsubscribers.push(unsubscribe);
+        }
+
+        // Send complaint
+        window.sendComplaint = async function() {
+            const message = document.getElementById('complaintMessage').value.trim();
+            
+            if (!message) {
+                alert('Tulis pengaduan terlebih dahulu');
                 return;
             }
             
-            chatInput.value = '';
-            lastMessageTime = now;
-            
             try {
-                await addDoc(chatRef, {
+                const complaintRef = await addDoc(collection(db, 'complaints'), {
                     viewerId: viewerId,
-                    name: viewerName,
-                    text: text,
-                    timestamp: serverTimestamp(),
-                    type: 'message'
+                    viewerName: viewerName,
+                    message: message,
+                    createdAt: serverTimestamp()
                 });
-            } catch (error) {
-                console.error('Failed to send message:', error);
-            }
-        }
-        
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-        
-        // Video controls
-        muteBtn.addEventListener('click', () => {
-            isMuted = !isMuted;
-            streamVideo.muted = isMuted;
-            muteBtn.textContent = isMuted ? '🔇' : '🔊';
-            muteBtn.classList.toggle('active', isMuted);
-        });
-        
-        fullscreenBtn.addEventListener('click', () => {
-            if (streamVideo.requestFullscreen) {
-                streamVideo.requestFullscreen();
-            } else if (streamVideo.webkitRequestFullscreen) {
-                streamVideo.webkitRequestFullscreen();
-            }
-        });
-        
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', async () => {
-            if (peerConnection) {
-                peerConnection.close();
-            }
-            
-            // Remove presence
-            try {
-                await deleteDoc(doc(db, 'presence', viewerId));
                 
-                // Update token viewer count
-                if (viewerToken) {
-                    await updateDoc(doc(db, 'tokens', viewerToken), {
-                        currentViewers: increment(-1)
-                    });
-                }
+                document.getElementById('complaintMessage').value = '';
+                
+                // Set 5 minute auto-delete timer
+                const timer = setTimeout(async () => {
+                    try {
+                        await deleteDoc(doc(db, 'complaints', complaintRef.id));
+                    } catch (e) {
+                        console.log('Complaint already deleted');
+                    }
+                }, 5 * 60 * 1000); // 5 minutes
+                
+                complaintTimers.push(timer);
+                
             } catch (error) {
-                console.error('Cleanup error:', error);
+                console.error('Error sending complaint:', error);
+                alert('Gagal mengirim pengaduan');
+            }
+        };
+
+        // Load my complaints
+        function loadMyComplaints() {
+            const complaintsRef = collection(db, 'complaints');
+            const q = query(complaintsRef, where('viewerId', '==', viewerId), orderBy('createdAt', 'desc'));
+            
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('myComplaintsList');
+                list.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    list.innerHTML = '<p class="no-complaints-text">Belum ada pengaduan</p>';
+                    return;
+                }
+                
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const time = data.createdAt?.toDate?.() || new Date();
+                    const timeStr = time.toLocaleTimeString('id-ID');
+                    
+                    const item = document.createElement('div');
+                    item.className = 'my-complaint-item glass-bubble slide-in-right';
+                    item.innerHTML = `
+                        <div class="complaint-content">
+                            <p>${data.message}</p>
+                            <span class="complaint-time">${timeStr}</span>
+                        </div>
+                        ${data.reply ? `
+                            <div class="complaint-reply">
+                                <span class="reply-icon">↪️</span>
+                                <p>${data.reply}</p>
+                            </div>
+                        ` : ''}
+                    `;
+                    list.appendChild(item);
+                });
+            });
+            
+            unsubscribers.push(unsubscribe);
+        }
+
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            if (viewerId) {
+                // Use sendBeacon for reliable cleanup
+                navigator.sendBeacon && navigator.sendBeacon('about:blank');
             }
         });
     </script>
