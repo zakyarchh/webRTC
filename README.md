@@ -1,9 +1,13 @@
 
+
+---
+
 🎥 WebRTC Live Streaming Platform
 
 Platform live streaming berbasis WebRTC dengan Firebase sebagai backend untuk autentikasi dan manajemen data. Project ini memungkinkan pengguna untuk menjadi streamer atau menonton live secara real-time langsung dari browser tanpa plugin tambahan.
 
 
+---
 
 🚀 Fitur Utama
 
@@ -22,6 +26,8 @@ Platform live streaming berbasis WebRTC dengan Firebase sebagai backend untuk au
 🎨 Animasi UI menggunakan Animista CSS Animations
 
 
+
+---
 
 🛠️ Teknologi yang Digunakan
 
@@ -64,12 +70,14 @@ Firebase Hosting (opsional)
 └── README.md
 
 
+---
+
 🔧 Cara Instalasi & Menjalankan
 
 1️⃣ Clone Repository
 
-git clone https://github.com/username/webrtc-live-streaming.git
-cd webrtc-live-streaming
+git clone https://github.com/zakyarchh/webRTC
+cd webRTC
 
 2️⃣ Konfigurasi Firebase
 
@@ -115,6 +123,7 @@ Buka di browser:
 http://localhost:3000
 
 
+---
 
 🔄 Cara Kerja Singkat WebRTC
 
@@ -133,6 +142,10 @@ http://localhost:3000
 5. Koneksi peer-to-peer terbentuk 🎉
 
 
+
+
+---
+
 ⚠️ Catatan Penting
 
 WebRTC P2P → tidak cocok untuk ribuan penonton
@@ -144,6 +157,9 @@ Media Server (SFU seperti Janus / Mediasoup)
 
 Firebase Storage tidak digunakan
 
+
+
+---
 
 📌 Roadmap (Rencana Fitur)
 
