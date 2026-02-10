@@ -58,15 +58,9 @@ Firebase Hosting (opsional)
 
 ├── index.html        # Halaman utama (landing / login)
 ├── stream.html       # Halaman streamer
-├── watch.html        # Halaman penonton
+├── free.html         # Halaman token free
 ├── admin.html        # Halaman admin (opsional)
-├── css/
-│   └── style.css     # Styling & animasi
-├── js/
-│   ├── firebase.js   # Konfigurasi Firebase
-│   ├── stream.js     # Logic WebRTC streamer
-│   ├── watch.js      # Logic WebRTC viewer
-│   └── auth.js       # Login & register
+├── style.css
 └── README.md
 
 
@@ -77,6 +71,7 @@ Firebase Hosting (opsional)
 1️⃣ Clone Repository
 
 git clone https://github.com/zakyarchh/webRTC
+
 cd webRTC
 
 2️⃣ Konfigurasi Firebase
